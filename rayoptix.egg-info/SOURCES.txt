@@ -1,0 +1,15 @@
+README.md
+setup.py
+rayoptix/__init__.py
+rayoptix/main.py
+rayoptix/setup_folders.py
+rayoptix/test.py
+rayoptix.egg-info/PKG-INFO
+rayoptix.egg-info/SOURCES.txt
+rayoptix.egg-info/dependency_links.txt
+rayoptix.egg-info/entry_points.txt
+rayoptix.egg-info/top_level.txt
+tests/__init__.py
+tests/test_basic.py
+utils/__init__.py
+utils/json_folder_utils.py
