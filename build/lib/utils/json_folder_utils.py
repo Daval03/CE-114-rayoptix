@@ -44,3 +44,5 @@ def validate_folders_in_json(data):
 
     except Exception as e:
         print(f"Error validating folders: {e}")
+
+print("Todo bien")

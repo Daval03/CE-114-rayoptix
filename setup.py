@@ -14,7 +14,7 @@ class PostInstallCommand(install):
         
         # Crear el directorio si no existe
         os.makedirs(os.path.dirname(json_file_path), exist_ok=True)
-        
+        print(json_file_path)
         # Si el archivo no existe, crearlo con un diccionario vacío
         if not os.path.exists(json_file_path):
             with open(json_file_path, 'w') as json_file:

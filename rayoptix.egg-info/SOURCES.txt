@@ -1,9 +1,9 @@
 README.md
 setup.py
+bifacial_radiance_local/__init__.py
+bifacial_radiance_local/setGround.py
 rayoptix/__init__.py
 rayoptix/main.py
-rayoptix/setup_folders.py
-rayoptix/test.py
 rayoptix.egg-info/PKG-INFO
 rayoptix.egg-info/SOURCES.txt
 rayoptix.egg-info/dependency_links.txt
@@ -13,3 +13,4 @@ tests/__init__.py
 tests/test_basic.py
 utils/__init__.py
 utils/json_folder_utils.py
+utils/setup_folders.py

@@ -9,41 +9,36 @@ def create_folder(folder_path, name_folder):
     Also saves folder_path and name_folder to a JSON file if name_folder is unique.
     """
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
-    
     try:
-        # Load existing data and validate
+        # Load existing data
         data = load_data(json_file)
-        validate_folders_in_json(data)
         
-        # Normalize the folder name (to uppercase)
-        folder_key = name_folder.upper()
-
-        # Check if the name is unique
-        if check_unique_name(data, folder_key):
-            folder_path = os.path.abspath(folder_path) if not os.path.isabs(folder_path) else folder_path
-            
-            # Create the folder if it doesn't exist
+        if check_unique_name(json_file, name_folder):
+            folder_path = os.path.abspath(folder_path)
             if not os.path.exists(folder_path):
                 os.makedirs(folder_path)
-                red = RadianceObj(folder_key, str(folder_path))  # Use this if necessary
+                redi = RadianceObj(name_folder, str(folder_path))
                 print(f"Folder created at {folder_path}")
             else:
                 print(f"Folder already exists at {folder_path}")
 
-            # Save the new entry in the JSON
-            data[folder_key] = folder_path
+            # Save the new entry in JSON
+            data[name_folder] = folder_path
             save_data(json_file, data)
-            print(f"Data saved: {folder_key} -> {folder_path}")
+            print(f"Data saved: {name_folder} -> {folder_path}")
         else:
-            print(f"Name '{folder_key}' already exists in {json_file}.")
+            print(f"Name '{name_folder}' already exists in {json_file}.")
     
     except Exception as e:
         print(f"Error: {e}")
 
+
 def setup_simulation_folder(folder_path: str, name_folder: str, use_absolute=True):
     """Sets up the simulation folder at the specified path."""
     folder_path = os.path.normpath(folder_path)
+    if not use_absolute:
+        folder_path = os.path.abspath(folder_path)
     create_folder(folder_path, name_folder)
 
-# Example call
-#setup_simulation_folder("../../TEMP/t1", "t1", True)
+
+#setup_simulation_folder("../../TEMP/T1", "T1", True )

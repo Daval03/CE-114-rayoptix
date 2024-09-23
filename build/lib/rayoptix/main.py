@@ -1,6 +1,6 @@
 import click
 from utils.setup_folders import *
-from bifacial_radiance_local.setGround import ground
+from bifacial_radiance.setGround import *
 
 @click.group()
 def cli():
@@ -18,27 +18,16 @@ def setup_folders(path, name, use_absolute):
 
 @cli.command()
 @click.option('--name', type=str, required=True, help='Name of the folder to retrieve demo')
-@click.option('--material', type=str, required=False, help='Material name or albedo value for the ground')
-@click.option('--material_file', type=str, required=False, help='Path to the material file')
-def set_ground(name, material, material_file):
+def ground(name):
     """Set the ground."""
-    # Try to convert material to a float if it represents a number
-    if material is not None:
-        try:
-            material = float(material)
-            # Ensure the number is between 0 and 1 for albedo
-            if not (0 <= material <= 1):
-                raise ValueError("Material albedo value must be between 0 and 1.")
-        except ValueError:
-            # If the conversion fails, material is assumed to be a string (material name)
-            pass
-    ground(name, material, material_file)
+    ground(name)
+    click.echo(f'set ground')
 
 
 @cli.command()
 @click.option('--name', type=str, required=True, help='Name of the folder to retrieve demo')
 def function_2(name):
-    """function--2."""
+    """F---2."""
     click.echo(f'Valores 2')
 
 @cli.command()
