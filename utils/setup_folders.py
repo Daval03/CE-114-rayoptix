@@ -26,6 +26,7 @@ def create_folder(folder_path, name_folder):
             if not os.path.exists(folder_path):
                 os.makedirs(folder_path)
                 red = RadianceObj(folder_key, str(folder_path))  # Use this if necessary
+                red.save(folder_key)
                 print(f"Folder created at {folder_path}")
             else:
                 print(f"Folder already exists at {folder_path}")
@@ -46,4 +47,4 @@ def setup_simulation_folder(folder_path: str, name_folder: str, use_absolute=Tru
     create_folder(folder_path, name_folder)
 
 # Example call
-#setup_simulation_folder("../../TEMP/t1", "t1", True)
+setup_simulation_folder("../../TEMP/T2", "T2", True)

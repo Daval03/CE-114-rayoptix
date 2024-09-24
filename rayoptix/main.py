@@ -1,6 +1,7 @@
 import click
 from utils.setup_folders import *
 from bifacial_radiance_local.setGround import ground
+from bifacial_radiance_local.setWeather import setEPW
 
 @click.group()
 def cli():
@@ -19,7 +20,7 @@ def setup_folders(path, name, use_absolute):
 @cli.command()
 @click.option('--name', type=str, required=True, help='Name of the folder to retrieve demo')
 @click.option('--material', type=str, required=False, help='Material name or albedo value for the ground')
-@click.option('--material_file', type=str, required=False, help='Path to the material file')
+@click.option('--material_file', type=bool, required=False, help='Path to the material file')
 def set_ground(name, material, material_file):
     """Set the ground."""
     # Try to convert material to a float if it represents a number
@@ -37,9 +38,12 @@ def set_ground(name, material, material_file):
 
 @cli.command()
 @click.option('--name', type=str, required=True, help='Name of the folder to retrieve demo')
-def function_2(name):
-    """function--2."""
-    click.echo(f'Valores 2')
+@click.option('--lat', type=float, required=True, help='')
+@click.option('--lon', type=float, required=True, help='')
+@click.option('--getall', type=bool, required=False, help='')
+def set_EPW(name, lat, lon, getall):
+    """Set the EPW files"""
+    setEPW(name, lat, lon, getall)
 
 @cli.command()
 def version():
