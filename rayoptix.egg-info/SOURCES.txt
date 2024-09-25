@@ -2,6 +2,7 @@ README.md
 setup.py
 bifacial_radiance_local/__init__.py
 bifacial_radiance_local/setGround.py
+bifacial_radiance_local/setWeather.py
 rayoptix/__init__.py
 rayoptix/main.py
 rayoptix.egg-info/PKG-INFO

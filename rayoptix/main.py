@@ -1,7 +1,7 @@
 import click
-from utils.setup_folders import *
+from utils.folders_utils import *
 from bifacial_radiance_local.setGround import ground
-from bifacial_radiance_local.setWeather import setEPW
+from bifacial_radiance_local.setWeather import set_WeatherFiles
 
 @click.group()
 def cli():
@@ -36,14 +36,14 @@ def set_ground(name, material, material_file):
     ground(name, material, material_file)
 
 
+
 @cli.command()
 @click.option('--name', type=str, required=True, help='Name of the folder to retrieve demo')
-@click.option('--lat', type=float, required=True, help='')
-@click.option('--lon', type=float, required=True, help='')
-@click.option('--getall', type=bool, required=False, help='')
-def set_EPW(name, lat, lon, getall):
+@click.option('--pathCSV', type=str, required=True, help='')
+def set_Weather(name, pathCSV):
     """Set the EPW files"""
-    setEPW(name, lat, lon, getall)
+    set_WeatherFiles(name, pathCSV)
+
 
 @cli.command()
 def version():

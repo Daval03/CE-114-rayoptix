@@ -1,5 +1,5 @@
 from utils.json_folder_utils import *
-from bifacial_radiance import RadianceObj
+import bifacial_radiance as br
 import json
 
 def ground(name_folder, material=None, material_file=None):
@@ -27,8 +27,11 @@ def ground(name_folder, material=None, material_file=None):
         # Retrieve the folder path from the JSON data
         folder_path = data[name_folder]
         
-        # Create a Radiance object for the specified folder
-        red = RadianceObj(name_folder, str(folder_path))
+        # Combine folder_path with name_folder to get the full path
+        full_path = os.path.join(folder_path, name_folder)
+        
+        # Load the Radiance object using the full path
+        red = br.load.loadRadianceObj(full_path)
         
         # Set the ground material using the material and material_file parameters
         red.setGround(material=material, material_file=material_file)
@@ -36,4 +39,4 @@ def ground(name_folder, material=None, material_file=None):
         # Display an error if the folder is not found in the JSON data
         print(f"Folder '{name_folder}' not found.")
 
-ground("T2", 0.25)
+#ground("T1", 0.25)
