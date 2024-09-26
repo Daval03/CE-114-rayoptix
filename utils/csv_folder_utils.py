@@ -19,7 +19,7 @@ def convert_value(value):
             return value  # If conversion fails, return the original string
     return value  # Return the value as is if it's not a string or list
 
-def getWeather_csv(pathCSV):
+def get_csv(pathCSV):
     """Reads a CSV file and returns a list of dictionaries with all its data."""
     data = []
     try:
@@ -43,3 +43,7 @@ def getWeather_csv(pathCSV):
     return data
 
 
+def load_params_from_csv(path):
+    """Load CSV and return the first row of parameters."""
+    params = get_csv(path)
+    return params[0] if params else None

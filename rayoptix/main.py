@@ -1,7 +1,7 @@
 import click
 from utils.folders_utils import *
-from bifacial_radiance_local.setGround import ground
-from bifacial_radiance_local.setWeather import set_WeatherFiles
+from bifacial_radiance_local.setScene import *
+from bifacial_radiance_local.setWeather import set_WeatherFiles_local
 
 @click.group()
 def cli():
@@ -33,16 +33,16 @@ def set_ground(name, material, material_file):
         except ValueError:
             # If the conversion fails, material is assumed to be a string (material name)
             pass
-    ground(name, material, material_file)
+    set_Ground_Local(name, material, material_file)
 
 
 
 @cli.command()
 @click.option('--name', type=str, required=True, help='Name of the folder to retrieve demo')
-@click.option('--pathCSV', type=str, required=True, help='')
+@click.option('--pathCSV', type=str, required=True, help='CSV path for the variables')
 def set_Weather(name, pathCSV):
     """Set the EPW files"""
-    set_WeatherFiles(name, pathCSV)
+    set_WeatherFiles_local(name, pathCSV)
 
 
 @cli.command()
