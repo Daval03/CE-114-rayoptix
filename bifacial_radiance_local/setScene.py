@@ -2,6 +2,7 @@ from utils.json_folder_utils import *
 from utils.scene_utils import set_ground_properties
 import bifacial_radiance as br
 import json
+import pickle
 
 
 def set_Ground_Local(name_folder, material=None, material_file=None):
@@ -30,8 +31,9 @@ def set_Ground_Local(name_folder, material=None, material_file=None):
         folder_path = data[name_folder]
         # Combine folder_path with name_folder to get the full path
         full_path = os.path.join(folder_path, name_folder)
-
-        red = br.RadianceObj(name_folder, str(folder_path))  # Use this if necessary
+        
+        red_save = os.path.join(folder_path, "save.pickle")
+        red = br.load.loadRadianceObj(red_save)
 
         if isinstance(material, str):
             red.setGround()
@@ -40,8 +42,10 @@ def set_Ground_Local(name_folder, material=None, material_file=None):
             #Set the ground material using the material and material_file parameters
             red.setGround(material=material, material_file=material_file)
 
+        # Save the object back using pickle
+        red.save(red_save)
     else:
         # Display an error if the folder is not found in the JSON data
         print(f"Folder '{name_folder}' not found.")
 
-#set_Ground_Local("Test", material="litesoil", material_file= None)
+set_Ground_Local("Test_2", material=0.2, material_file= None)

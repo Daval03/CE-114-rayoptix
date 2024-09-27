@@ -4,6 +4,27 @@ from bifacial_radiance import RadianceObj
 from utils.json_folder_utils import *
 import shutil
 
+def move_epws_folder(folder_path):
+    """Moves the EPWs folder from the current working directory to the specified destination."""
+    # Define the source and destination of the EPWs folder
+    epws_source = os.path.join(os.getcwd(), "EPWs")  # Assuming it gets created in the current working directory
+    epws_destination = os.path.join(folder_path, "EPWs")
+    
+    # Check if the EPWs folder exists and move it
+    if os.path.exists(epws_source):
+        # Create destination directory if it doesn't exist
+        os.makedirs(epws_destination, exist_ok=True)
+        
+        for filename in os.listdir(epws_source):
+            file_path = os.path.join(epws_source, filename)
+            shutil.move(file_path, epws_destination)
+            print(f"Moved: {filename} to {epws_destination}")
+        
+        # Optionally, remove the empty EPWs folder
+        os.rmdir(epws_source)
+    else:
+        print(f"EPWs folder not found at: {epws_source}")
+
 def create_folder(folder_path, name_folder):
     """Creates a folder if it doesn't exist and initializes a RadianceObj.
     Also saves folder_path and name_folder to a JSON file if name_folder is unique.
@@ -22,10 +43,9 @@ def create_folder(folder_path, name_folder):
             # Create the folder if it doesn't exist
             if not os.path.exists(folder_path):
                 os.makedirs(folder_path)
-                red = RadianceObj(name_folder, str(folder_path))  # Use this if necessary
-                
-                #name_radianceObj = name_folder + '.pickle'
-                #red.save(name_radianceObj)
+                red = RadianceObj(name_folder, str(folder_path)) 
+                red_save = os.path.join(folder_path, "save.pickle")
+                red.save(red_save)
 
                 print(f"Folder created at {folder_path}")
             else:
@@ -58,4 +78,4 @@ def setup_simulation_folder(folder_path: str, name_folder: str, use_absolute=Tru
 # Validar que la ruta no se repita para crear o meter las varas en el json
 ##
 # Example call
-#setup_simulation_folder("C:/Users/cambr/bifacial_radiance/TEMP/Tutorial", "Test", False)
+setup_simulation_folder("C:/Users/cambr/bifacial_radiance/TEMP/Test_2", "Test_2", True)

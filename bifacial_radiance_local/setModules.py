@@ -54,12 +54,9 @@ def make_Module_Local(name_folder, pathCSV_makeModule, pathCSV_cellModule, pathC
     # Load the Radiance object using the folder path
     full_path = os.path.join(folder_path, name_folder)
 
-    #red = br.load.loadRadianceObj(full_path)
-
-    red = br.RadianceObj(name_folder, str(folder_path))  # Use this if necessary
-
-    print("red.getfilelist()",red.getfilelist())
-
+    red_save = os.path.join(folder_path, "save.pickle")
+    red = br.load.loadRadianceObj(red_save)
+    
     # Load CSV parameters
     makeModule_params = load_params_from_csv(pathCSV_makeModule)
     if not makeModule_params:
@@ -83,6 +80,8 @@ def make_Module_Local(name_folder, pathCSV_makeModule, pathCSV_cellModule, pathC
     omegaParams = build_omega_params(load_params_from_csv(pathCSV_omegaParams))
     
     # Create the module
+    original_path = os.getcwd()
+    os.chdir(folder_path)
     module = red.makeModule(
         name=name,
         x=x,
@@ -97,15 +96,16 @@ def make_Module_Local(name_folder, pathCSV_makeModule, pathCSV_cellModule, pathC
         tubeParams=tubeParams,
         omegaParams=omegaParams
     )
+    os.chdir(original_path)
     # Save the module and variable
-    save_variable(folder_path, "makeModule", module)
-    
+    red.save(red_save)
+    #print(red.ground.Grefl)
 
-# make_Module_Local(name_folder= "Test", 
-# pathCSV_makeModule="C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/makeModule_params.csv", 
-# pathCSV_cellModule= "C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/cellModule_params.csv",
-# pathCSV_tubeParams= None,
-# pathCSV_omegaParams= None)
+make_Module_Local(name_folder= "Test_2", 
+pathCSV_makeModule="C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/makeModule_params.csv", 
+pathCSV_cellModule= "C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/cellModule_params.csv",
+pathCSV_tubeParams= None,
+pathCSV_omegaParams= None)
 
 
 
