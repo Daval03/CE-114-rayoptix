@@ -38,8 +38,6 @@ def gen_CumSky_Local(name_folder,gencumsky_path, savefile):
         print(f"Folder '{name_folder}' not found.")
 
 def gen_CumSky1axis_Local(name_folder, trackerdict):
-    
-    #------------We need to use set1axis before --- Needs works --- not finish
 
     # Path to the JSON file where simulation folders are stored
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
@@ -133,15 +131,16 @@ def gen_Daylit2Manual_Local(name_folder, dni, dhi, sunalt, sunaz):
         # Display an error if the folder is not found in the JSON data
         print(f"Folder '{name_folder}' not found.")
 
-def gen_DayLit1Axis_Local(name_folder):
+###
+#Not working
+###
+def gen_DayLit1Axis_Local(name_folder, metdata, trackerdict):
     # Path to the JSON file where simulation folders are stored
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     
     # Load the data from the JSON file
     data = load_data(json_file)
 
-    #------------We need to use set1axis before --- Needs works --- not finish
-    
     # Check if the folder name exists in the loaded data
     if name_folder in data:
         # Retrieve the folder path from the JSON data
@@ -152,12 +151,19 @@ def gen_DayLit1Axis_Local(name_folder):
         #Load the radianceObj
         red_save = os.path.join(folder_path, "save.pickle")
         red = br.load.loadRadianceObj(red_save)
-
+        
+        #Check if red.module exist
+        if metdata  is True:
+            metObj = red.module
+        else:
+            metObj = None
+        
+        
         #Move the process to the folder_path
         original_path = os.getcwd()
         os.chdir(folder_path)
         
-        red.gendaylit1axis()
+        red.gendaylit1axis(metdata=metObj,trackerdict=trackerdict)
         
         os.chdir(original_path)
         red.save(red_save)
@@ -182,3 +188,7 @@ def gen_DayLit1Axis_Local(name_folder):
 # dhi =45, 
 # sunalt=90,
 # sunaz =45)
+
+# gen_DayLit1Axis_Local(name_folder="Test_2", 
+# metdata=False, 
+# trackerdict=None)
