@@ -4,7 +4,7 @@ import bifacial_radiance as br
 import json
 
 from utils.json_folder_utils import load_data
-from utils.csv_folder_utils import get_csv
+from utils.csv_folder_utils import load_params_from_csv
 from utils.metadata_utils import save_variable
 from utils.folders_utils import move_epws_folder
 
@@ -25,8 +25,7 @@ def set_WeatherFiles_local(name_folder, pathCSV):
         red_save = os.path.join(folder_path, "save.pickle")
         red = br.load.loadRadianceObj(red_save)
 
-        csv_weather = get_csv(pathCSV)
-        csv_weather = csv_weather[0]
+        csv_weather = load_params_from_csv(pathCSV)
 
         original_path = os.getcwd()
         os.chdir(folder_path)
@@ -42,12 +41,9 @@ def set_WeatherFiles_local(name_folder, pathCSV):
         source = csv_weather["source"],
         coerce_year =csv_weather["coerce_year"] ,
         tz_convert_val = csv_weather["tz_convert_val"])
+        #save_variable(folder_path, "weather", metdata)
         os.chdir(original_path)
-
-        save_variable(folder_path, "weather", metdata)
-        #move_epws_folder(folder_path)
         red.save(red_save)
-        print(red.ground.Grefl)
 
     else:
         # Display an error if the folder is not found in the JSON data

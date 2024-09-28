@@ -1,5 +1,5 @@
 from utils.json_folder_utils import *
-from utils.csv_folder_utils import get_csv, load_params_from_csv
+from utils.csv_folder_utils import load_params_from_csv
 from utils.metadata_utils import save_variable
 import bifacial_radiance as br
 import json

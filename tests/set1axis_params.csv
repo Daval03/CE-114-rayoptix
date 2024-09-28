@@ -1,0 +1,2 @@
+metdata,azimuth,limit_angle,angledelta,backtrack,gcr,cumulativesky,fixed_tilt_angle,useMeasuredTrackerAngle
+false,180,45,5,true,0.33,true,,false
