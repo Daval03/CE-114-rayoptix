@@ -54,19 +54,7 @@ def set_Ground_Local(name_folder, material=None, material_file=None):
         print(f"Folder '{name_folder}' not found.")
 
 def set_1axis_Local(name_folder, pathCSV):
-    """
-    Sets the ground material for the simulation folder using bifacial_radiance.
 
-    Parameters
-    ----------
-    name_folder : str
-        The name of the folder that contains the simulation data.
-    material : numeric or str, optional
-        Material name or albedo value to be used for the ground. Default is None.
-    material_file : str, optional
-        Path to the material file. Default is None.
-    """
-    
     # Path to the JSON file where simulation folders are stored
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     
@@ -89,7 +77,7 @@ def set_1axis_Local(name_folder, pathCSV):
         if not set1axis_params:
             print("CSV files are missing.")
             return
-        print(set1axis_params)
+
         # Extract main module parameters
         metdata = set1axis_params.get('metdata')
         azimuth = set1axis_params.get('azimuth')
@@ -100,7 +88,7 @@ def set_1axis_Local(name_folder, pathCSV):
         cumulativesky = set1axis_params.get('cumulativesky')
         fixed_tilt_angle = set1axis_params.get('fixed_tilt_angle')
         useMeasuredTrackerAngle = set1axis_params.get('useMeasuredTrackerAngle')
-        
+        #Check if red.module exist
         if metdata is True:
             metobj = red.metdata
         else:
@@ -126,5 +114,188 @@ def set_1axis_Local(name_folder, pathCSV):
         # Display an error if the folder is not found in the JSON data
         print(f"Folder '{name_folder}' not found.")
 
-#set_Ground_Local("Test_2", material=0.2, material_file= None)
+def make_Scene_Local(name_folder, pathCSV):    
+    # Path to the JSON file where simulation folders are stored
+    json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
+    
+    # Load the data from the JSON file
+    data = load_data(json_file)
+    
+    # Check if the folder name exists in the loaded data
+    if name_folder in data:
+        # Retrieve the folder path from the JSON data
+        folder_path = data[name_folder]
+        # Combine folder_path with name_folder to get the full path
+        full_path = os.path.join(folder_path, name_folder)
+        
+        red_save = os.path.join(folder_path, "save.pickle")
+        red = br.load.loadRadianceObj(red_save)
+        
+        # Load CSV parameters
+        makeScene_params = load_params_from_csv(pathCSV)
+
+        if not makeScene_params:
+            print("CSV files are missing.")
+            return
+
+        # Extract main module parameters
+        module  = makeScene_params.get('module')
+        sceneDict = {
+            'tilt': makeScene_params.get('tilt'),
+            'clearance_height': makeScene_params.get('clearance_height'),
+            'pitch': makeScene_params.get('pitch'),
+            'azimuth': makeScene_params.get('azimuth'),
+            'nMods': makeScene_params.get('nMods'),
+            'nRows': makeScene_params.get('nRows'),
+            'hub_height': makeScene_params.get('hub_height'),
+        }
+        radname = makeScene_params.get('radname')
+        #Check if red.module exist
+        if module is True:
+            moduleObj = red.module
+        else:
+            moduleObj = None
+
+        original_path = os.getcwd()
+        os.chdir(folder_path)
+        red.makeScene(module=moduleObj, sceneDict=sceneDict, radname=radname)
+        os.chdir(original_path)
+        
+        # Save the object back using pickle
+        red.save(red_save)
+    else:
+        # Display an error if the folder is not found in the JSON data
+        print(f"Folder '{name_folder}' not found.")
+
+def make_Scene1axis_Local(name_folder, pathCSV):    
+    # Path to the JSON file where simulation folders are stored
+    json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
+    
+    # Load the data from the JSON file
+    data = load_data(json_file)
+    
+    # Check if the folder name exists in the loaded data
+    if name_folder in data:
+        # Retrieve the folder path from the JSON data
+        folder_path = data[name_folder]
+        # Combine folder_path with name_folder to get the full path
+        full_path = os.path.join(folder_path, name_folder)
+        
+        red_save = os.path.join(folder_path, "save.pickle")
+        red = br.load.loadRadianceObj(red_save)
+        
+        # Load CSV parameters
+        makeScene1axis_params = load_params_from_csv(pathCSV)
+
+        if not makeScene1axis_params:
+            print("CSV files are missing.")
+            return
+
+        # Extract main module parameters
+        module  = makeScene1axis_params.get('module')
+        trackerdict = makeScene1axis_params.get('trackerdict')
+        cumulativesky = makeScene1axis_params.get('cumulativesky')
+        sceneDict = {
+            'tilt': makeScene1axis_params.get('tilt'),
+            'pitch': makeScene1axis_params.get('pitch'),
+            'azimuth': makeScene1axis_params.get('azimuth'),
+            'hub_height': makeScene1axis_params.get('hub_height'),
+        }
+        #Check if red.trackerdict exist
+        if trackerdict is True:
+            trackerObj = red.trackerdict
+        else:
+            trackerObj = None
+        #Check if red.module exist
+        if module is True:
+            moduleObj = red.module
+        else:
+            moduleObj = None
+        
+        original_path = os.getcwd()
+        os.chdir(folder_path)
+        red.makeScene1axis(trackerdict=trackerObj,module=moduleObj, sceneDict=sceneDict, cumulativesky=cumulativesky)
+        os.chdir(original_path)
+        
+        # Save the object back using pickle
+        red.save(red_save)
+    else:
+        # Display an error if the folder is not found in the JSON data
+        print(f"Folder '{name_folder}' not found.")
+
+def make_Oct_Local(name_folder, octname):    
+    # Path to the JSON file where simulation folders are stored
+    json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
+    
+    # Load the data from the JSON file
+    data = load_data(json_file)
+    
+    # Check if the folder name exists in the loaded data
+    if name_folder in data:
+        # Retrieve the folder path from the JSON data
+        folder_path = data[name_folder]
+        # Combine folder_path with name_folder to get the full path
+        full_path = os.path.join(folder_path, name_folder)
+        
+        red_save = os.path.join(folder_path, "save.pickle")
+        red = br.load.loadRadianceObj(red_save)
+
+        original_path = os.getcwd()
+        os.chdir(folder_path)
+        red.makeOct(filelist=red.getfilelist(), octname=octname)
+        os.chdir(original_path)
+        
+        # Save the object back using pickle
+        red.save(red_save)
+    else:
+        # Display an error if the folder is not found in the JSON data
+        print(f"Folder '{name_folder}' not found.")
+
+def make_Oct1axis_Local(name_folder,trackerdict,singleindex,customname):
+    # Path to the JSON file where simulation folders are stored
+    json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
+    
+    # Load the data from the JSON file
+    data = load_data(json_file)
+    
+    # Check if the folder name exists in the loaded data
+    if name_folder in data:
+        # Retrieve the folder path from the JSON data
+        folder_path = data[name_folder]
+        # Combine folder_path with name_folder to get the full path
+        full_path = os.path.join(folder_path, name_folder)
+        
+        red_save = os.path.join(folder_path, "save.pickle")
+        red = br.load.loadRadianceObj(red_save)
+        
+        #Check if red.trackerdict exist
+        if trackerdict is True:
+            trackerObj = red.trackerdict
+        else:
+            trackerObj = None
+
+        original_path = os.getcwd()
+        os.chdir(folder_path)
+        
+        red.makeOct1axis(trackerdict=trackerObj,
+        singleindex= singleindex,
+        customname=customname)
+
+        os.chdir(original_path)
+        
+        # Save the object back using pickle
+        red.save(red_save)
+    else:
+        # Display an error if the folder is not found in the JSON data
+        print(f"Folder '{name_folder}' not found.")
+
+
+##
+#Falta showScene, makeCustomObject y appendtoScene 
+##
+#set_Ground_Local("Test_2", material=0.2, material_file= None) makeOct
 #set_1axis_Local("Test_2", "C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/set1axis_params.csv")
+#make_Scene_Local("Test_2", "C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/makeScene_params.csv")
+#make_Scene1axis_Local("Test_2", "C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/makeScene1axis_params.csv")
+#make_Oct_Local("Test_2", octname=None)
+#make_Oct1axis_Local("Test_2", trackerdict=False, singleindex=None, customname=None)

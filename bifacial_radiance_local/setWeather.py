@@ -41,7 +41,6 @@ def set_WeatherFiles_local(name_folder, pathCSV):
         source = csv_weather["source"],
         coerce_year =csv_weather["coerce_year"] ,
         tz_convert_val = csv_weather["tz_convert_val"])
-        #save_variable(folder_path, "weather", metdata)
         os.chdir(original_path)
         red.save(red_save)
 

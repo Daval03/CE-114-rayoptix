@@ -56,12 +56,6 @@ def create_folder(folder_path, name_folder):
             save_data(json_file, data)
             print(f"Data saved: {name_folder} -> {folder_path}")
             
-            # Create "metadata" folder inside folder_path
-            metadata_folder = os.path.join(folder_path, "metadata")
-            if not os.path.exists(metadata_folder):
-                os.makedirs(metadata_folder)
-                print(f"'metadata' folder created at {metadata_folder}")
-            
         else:
             print(f"Name '{name_folder}' already exists in {json_file}.")
     
