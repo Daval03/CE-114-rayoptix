@@ -9,7 +9,16 @@ from utils.metadata_utils import save_variable
 from utils.folders_utils import move_epws_folder
 
 def set_WeatherFiles_local(name_folder, pathCSV):
-    
+    """
+    Sets the weather file for the simulation folder based on latitude, longitude, and other parameters provided in a CSV file.
+
+    Parameters
+    ----------
+    name_folder : str
+        The name of the folder that contains the simulation data.
+    pathCSV : str
+        Path to the CSV file containing weather-related parameters such as latitude, longitude, start and end time, and other settings.
+    """
     # Path to the JSON file where simulation folders are stored
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     

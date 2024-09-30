@@ -2,8 +2,19 @@ from utils.json_folder_utils import *
 import bifacial_radiance as br
 import json
 
-def gen_CumSky_Local(name_folder,gencumsky_path, savefile):
-    
+def gen_CumSky_Local(name_folder, gencumsky_path, savefile):
+    """
+    Generates a cumulative sky for the simulation folder using bifacial_radiance.
+
+    Parameters
+    ----------
+    name_folder : str
+        The name of the folder that contains the simulation data.
+    gencumsky_path : str
+        Path to the custom gencumsky file. If None, default values are used.
+    savefile : str
+        Filename to save the cumulative sky file.
+    """
     # Path to the JSON file where simulation folders are stored
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     
@@ -38,7 +49,16 @@ def gen_CumSky_Local(name_folder,gencumsky_path, savefile):
         print(f"Folder '{name_folder}' not found.")
 
 def gen_CumSky1axis_Local(name_folder, trackerdict):
+    """
+    Generates a cumulative sky for a 1-axis tracker configuration in the simulation folder using bifacial_radiance.
 
+    Parameters
+    ----------
+    name_folder : str
+        The name of the folder that contains the simulation data.
+    trackerdict : dict
+        Dictionary of tracker configurations.
+    """
     # Path to the JSON file where simulation folders are stored
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     
@@ -68,6 +88,20 @@ def gen_CumSky1axis_Local(name_folder, trackerdict):
         print(f"Folder '{name_folder}' not found.")
 
 def gen_Daylit_Local(name_folder, timeindex, metdata, debug=False):
+    """
+    Generates daylighting data for a specific time index using bifacial_radiance.
+
+    Parameters
+    ----------
+    name_folder : str
+        The name of the folder that contains the simulation data.
+    timeindex : int
+        Time index for which the daylighting data should be generated.
+    metdata : bool
+        Whether to use metdata from the Radiance object. If False, metdata is set to None.
+    debug : bool, optional
+        Flag for enabling debug mode. Default is False.
+    """
     # Path to the JSON file where simulation folders are stored
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     
@@ -102,6 +136,22 @@ def gen_Daylit_Local(name_folder, timeindex, metdata, debug=False):
         print(f"Folder '{name_folder}' not found.")
 
 def gen_Daylit2Manual_Local(name_folder, dni, dhi, sunalt, sunaz):
+    """
+    Manually generates daylighting data for the simulation folder using bifacial_radiance.
+
+    Parameters
+    ----------
+    name_folder : str
+        The name of the folder that contains the simulation data.
+    dni : float
+        Direct normal irradiance (DNI) value.
+    dhi : float
+        Diffuse horizontal irradiance (DHI) value.
+    sunalt : float
+        Sun altitude angle.
+    sunaz : float
+        Sun azimuth angle.
+    """
     # Path to the JSON file where simulation folders are stored
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     
@@ -135,6 +185,18 @@ def gen_Daylit2Manual_Local(name_folder, dni, dhi, sunalt, sunaz):
 #Not working
 ###
 def gen_DayLit1Axis_Local(name_folder, metdata, trackerdict):
+    """
+    Generates daylighting data for a 1-axis tracker configuration in the simulation folder using bifacial_radiance.
+
+    Parameters
+    ----------
+    name_folder : str
+        The name of the folder that contains the simulation data.
+    metdata : bool
+        Whether to use metdata from the Radiance object. If False, metdata is set to None.
+    trackerdict : dict
+        Dictionary of tracker configurations.
+    """
     # Path to the JSON file where simulation folders are stored
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     
@@ -157,8 +219,7 @@ def gen_DayLit1Axis_Local(name_folder, metdata, trackerdict):
             metObj = red.module
         else:
             metObj = None
-        
-        
+          
         #Move the process to the folder_path
         original_path = os.getcwd()
         os.chdir(folder_path)
@@ -171,9 +232,8 @@ def gen_DayLit1Axis_Local(name_folder, metdata, trackerdict):
         # Display an error if the folder is not found in the JSON data
         print(f"Folder '{name_folder}' not found.")
 
-
 # gen_CumSky_Local(name_folder= "Test_2", 
-# gencumsky_path="EPWs/metdata_temp.csv", gendaylit2manual
+# gencumsky_path="EPWs/metdata_temp.csv", 
 # savefile= "eje")
 
 # gen_CumSky1axis_Local(name_folder= "Test_2",
@@ -183,7 +243,7 @@ def gen_DayLit1Axis_Local(name_folder, metdata, trackerdict):
 # timeindex=420, 
 # metdata=True, debug=False)
 
-# gen_Daylit2Manual_Local(name_folder="Test_2", gendaylit1axis
+# gen_Daylit2Manual_Local(name_folder="Test_2", 
 # dni =40, 
 # dhi =45, 
 # sunalt=90,

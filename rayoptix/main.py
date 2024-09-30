@@ -17,25 +17,6 @@ def setup_folders(path, name, use_absolute):
     setup_simulation_folder(path, name, use_absolute)
     click.echo(f'Setting up with path: {path}, name: {name} , absolute: {use_absolute}')
 
-@cli.command()
-@click.option('--name', type=str, required=True, help='Name of the folder to retrieve demo')
-@click.option('--material', type=str, required=False, help='Material name or albedo value for the ground')
-@click.option('--material_file', type=bool, required=False, help='Path to the material file')
-def set_ground(name, material, material_file):
-    """Set the ground."""
-    # Try to convert material to a float if it represents a number
-    if material is not None:
-        try:
-            material = float(material)
-            # Ensure the number is between 0 and 1 for albedo
-            if not (0 <= material <= 1):
-                raise ValueError("Material albedo value must be between 0 and 1.")
-        except ValueError:
-            # If the conversion fails, material is assumed to be a string (material name)
-            pass
-    set_Ground_Local(name, material, material_file)
-
-
 
 @cli.command()
 @click.option('--name', type=str, required=True, help='Name of the folder to retrieve demo')

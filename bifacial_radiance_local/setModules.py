@@ -39,6 +39,22 @@ def build_omega_params(omega_data):
     } if omega_data else None
 
 def make_Module_Local(name_folder, pathCSV_makeModule, pathCSV_cellModule, pathCSV_tubeParams, pathCSV_omegaParams):
+    """
+    Creates a bifacial radiance module based on parameters from multiple CSV files and saves it to the simulation folder.
+
+    Parameters
+    ----------
+    name_folder : str
+        The name of the folder that contains the simulation data.
+    pathCSV_makeModule : str
+        Path to the CSV file containing general module parameters such as dimensions, number of panels, and gaps.
+    pathCSV_cellModule : str
+        Path to the CSV file containing cell-level parameters for the module.
+    pathCSV_tubeParams : str
+        Path to the CSV file containing tube-related parameters for the module.
+    pathCSV_omegaParams : str
+        Path to the CSV file containing omega-related parameters for the module.
+    """
     # Path to the JSON file where simulation folders are stored
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     
@@ -99,7 +115,6 @@ def make_Module_Local(name_folder, pathCSV_makeModule, pathCSV_cellModule, pathC
     os.chdir(original_path)
     # Save the module and variable
     red.save(red_save)
-    #print(red.ground.Grefl)
 
 make_Module_Local(name_folder= "Test_2", 
 pathCSV_makeModule="C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/makeModule_params.csv", 
