@@ -1,4 +1,0 @@
-bifacial_radiance_local
-rayoptix
-tests
-utils

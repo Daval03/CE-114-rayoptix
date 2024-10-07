@@ -236,7 +236,7 @@ def gen_DayLit1Axis_Local(name_folder, metdata, trackerdict):
 # gencumsky_path="EPWs/metdata_temp.csv", 
 # savefile= "eje")
 
-# gen_CumSky1axis_Local(name_folder= "Test_2",
+# gen_CumSky1axis_Local(name_folder= "Test_1",
 # trackerdict=None)
 
 # gen_Daylit_Local(name_folder="Test_2", 

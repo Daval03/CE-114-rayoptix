@@ -72,4 +72,5 @@ def setup_simulation_folder(folder_path: str, name_folder: str, use_absolute=Tru
 # Validar que la ruta no se repita para crear o meter las varas en el json
 ##
 # Example call
-setup_simulation_folder("C:/Users/cambr/bifacial_radiance/TEMP/Test_2", "Test_2", True)
+
+#setup_simulation_folder("C:/Users/cambr/bifacial_radiance/TEMP/Test_1", "Test_1", True)

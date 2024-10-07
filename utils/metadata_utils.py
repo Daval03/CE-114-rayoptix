@@ -31,6 +31,9 @@ def load_variable(folder_path, filename):
     else:
         raise FileNotFoundError(f"File not found: {full_path}")
 
+
+
+
 #metdata= load_readWeatherFile("C:/Users/cambr/Documents/TEMP/T1")
 #print(metdata.longitude)
 #print(dir(metdata))

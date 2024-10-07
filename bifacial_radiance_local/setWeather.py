@@ -3,10 +3,10 @@ import shutil
 import bifacial_radiance as br
 import json
 
+from utils.folders_utils import move_epws_folder
+from utils.metadata_utils import save_variable
 from utils.json_folder_utils import load_data
 from utils.csv_folder_utils import load_params_from_csv
-from utils.metadata_utils import save_variable
-from utils.folders_utils import move_epws_folder
 
 def set_WeatherFiles_local(name_folder, pathCSV):
     """
@@ -57,5 +57,4 @@ def set_WeatherFiles_local(name_folder, pathCSV):
         # Display an error if the folder is not found in the JSON data
         print(f"Folder '{name_folder}' not found.")
 
-
-set_WeatherFiles_local("Test_2","C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/test_weather.csv")
+#set_WeatherFiles_local("Test_1","C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/test_weather.csv")

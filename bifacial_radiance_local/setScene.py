@@ -345,9 +345,8 @@ def make_Oct1axis_Local(name_folder,trackerdict,singleindex,customname):
 ##
 #Falta showScene, makeCustomObject y appendtoScene 
 ##
-
-#set_Ground_Local("Test_2", material=0.2, material_file= None) makeOct
-#set_1axis_Local("Test_2", "C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/set1axis_params.csv")
+#set_Ground_Local("Test_1", material=0.2, material_file= None) 
+#set_1axis_Local("Test_1", "C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/set1axis_params.csv")
 #make_Scene_Local("Test_2", "C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/makeScene_params.csv")
 #make_Scene1axis_Local("Test_2", "C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/makeScene1axis_params.csv")
 #make_Oct_Local("Test_2", octname=None)
