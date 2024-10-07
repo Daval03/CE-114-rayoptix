@@ -6,7 +6,7 @@ import json
 import pickle
 
 
-def set_Ground_Local(name_folder, material=None, material_file=None):
+def setGround_Local(name_folder, material=None, material_file=None):
     """
     Sets the ground material for the simulation folder using bifacial_radiance.
 
@@ -53,7 +53,7 @@ def set_Ground_Local(name_folder, material=None, material_file=None):
         # Display an error if the folder is not found in the JSON data
         print(f"Folder '{name_folder}' not found.")
 
-def set_1axis_Local(name_folder, pathCSV):
+def set1axis_Local(name_folder, pathCSV):
     """
     Sets the 1-axis tracker configuration for the simulation folder using bifacial_radiance.
     Parameters
@@ -122,7 +122,7 @@ def set_1axis_Local(name_folder, pathCSV):
         # Display an error if the folder is not found in the JSON data
         print(f"Folder '{name_folder}' not found.")
 
-def make_Scene_Local(name_folder, pathCSV):    
+def makeScene_Local(name_folder, pathCSV):    
     """
     Creates a scene for the simulation folder using bifacial_radiance based on the parameters from a CSV file.
 
@@ -185,7 +185,7 @@ def make_Scene_Local(name_folder, pathCSV):
         # Display an error if the folder is not found in the JSON data
         print(f"Folder '{name_folder}' not found.")
 
-def make_Scene1axis_Local(name_folder, pathCSV):    
+def makeScene1axis_Local(name_folder, pathCSV):    
     """
     Creates a 1-axis tracker scene for the simulation folder using bifacial_radiance based on the parameters from a CSV file.
 
@@ -251,7 +251,7 @@ def make_Scene1axis_Local(name_folder, pathCSV):
         # Display an error if the folder is not found in the JSON data
         print(f"Folder '{name_folder}' not found.")
 
-def make_Oct_Local(name_folder, octname):    
+def makeOct_Local(name_folder, octname):    
     """
     Generates an .oct file for the simulation folder using bifacial_radiance.
 
@@ -289,7 +289,7 @@ def make_Oct_Local(name_folder, octname):
         # Display an error if the folder is not found in the JSON data
         print(f"Folder '{name_folder}' not found.")
 
-def make_Oct1axis_Local(name_folder,trackerdict,singleindex,customname):
+def makeOct1axis_Local(name_folder,trackerdict,singleindex,customname):
     """
     Generates an .oct file for a 1-axis tracker configuration in the simulation folder using bifacial_radiance.
 
@@ -345,9 +345,9 @@ def make_Oct1axis_Local(name_folder,trackerdict,singleindex,customname):
 ##
 #Falta showScene, makeCustomObject y appendtoScene 
 ##
-#set_Ground_Local("Test_1", material=0.2, material_file= None) 
-#set_1axis_Local("Test_1", "C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/set1axis_params.csv")
-#make_Scene_Local("Test_2", "C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/makeScene_params.csv")
-#make_Scene1axis_Local("Test_2", "C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/makeScene1axis_params.csv")
-#make_Oct_Local("Test_2", octname=None)
-#make_Oct1axis_Local("Test_2", trackerdict=False, singleindex=None, customname=None)
+#setGround_Local("Test_1", material=0.2, material_file= None) 
+#set1axis_Local("Test_1", "C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/set1axis_params.csv")
+#makeScene_Local("Test_2", "C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/makeScene_params.csv")
+#makeScene1axis_Local("Test_2", "C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/makeScene1axis_params.csv")
+#makeOct_Local("Test_2", octname=None)
+#makeOct1axis_Local("Test_2", trackerdict=False, singleindex=None, customname=None)

@@ -1,7 +1,7 @@
 import click
 from utils.folders_utils import *
 from bifacial_radiance_local.setScene import *
-from bifacial_radiance_local.setWeather import set_WeatherFiles_local
+from bifacial_radiance_local.setWeather import setWeatherFiles_local
 
 @click.group()
 def cli():
@@ -23,7 +23,7 @@ def setup_folders(path, name, use_absolute):
 @click.option('--pathCSV', type=str, required=True, help='CSV path for the variables')
 def set_Weather(name, pathCSV):
     """Set the EPW files"""
-    set_WeatherFiles_local(name, pathCSV)
+    setWeatherFiles_local(name, pathCSV)
 
 
 @cli.command()

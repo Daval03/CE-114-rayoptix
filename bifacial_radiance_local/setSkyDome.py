@@ -2,7 +2,7 @@ from utils.json_folder_utils import *
 import bifacial_radiance as br
 import json
 
-def gen_CumSky_Local(name_folder, gencumsky_path, savefile):
+def genCumSky_Local(name_folder, gencumsky_path, savefile):
     """
     Generates a cumulative sky for the simulation folder using bifacial_radiance.
 
@@ -48,7 +48,7 @@ def gen_CumSky_Local(name_folder, gencumsky_path, savefile):
         # Display an error if the folder is not found in the JSON data
         print(f"Folder '{name_folder}' not found.")
 
-def gen_CumSky1axis_Local(name_folder, trackerdict):
+def genCumSky1axis_Local(name_folder, trackerdict):
     """
     Generates a cumulative sky for a 1-axis tracker configuration in the simulation folder using bifacial_radiance.
 
@@ -87,7 +87,7 @@ def gen_CumSky1axis_Local(name_folder, trackerdict):
         # Display an error if the folder is not found in the JSON data
         print(f"Folder '{name_folder}' not found.")
 
-def gen_Daylit_Local(name_folder, timeindex, metdata, debug=False):
+def genDaylit_Local(name_folder, timeindex, metdata, debug=False):
     """
     Generates daylighting data for a specific time index using bifacial_radiance.
 
@@ -135,7 +135,7 @@ def gen_Daylit_Local(name_folder, timeindex, metdata, debug=False):
         # Display an error if the folder is not found in the JSON data
         print(f"Folder '{name_folder}' not found.")
 
-def gen_Daylit2Manual_Local(name_folder, dni, dhi, sunalt, sunaz):
+def genDaylit2Manual_Local(name_folder, dni, dhi, sunalt, sunaz):
     """
     Manually generates daylighting data for the simulation folder using bifacial_radiance.
 
@@ -184,7 +184,7 @@ def gen_Daylit2Manual_Local(name_folder, dni, dhi, sunalt, sunaz):
 ###
 #Not working
 ###
-def gen_DayLit1Axis_Local(name_folder, metdata, trackerdict):
+def genDayLit1Axis_Local(name_folder, metdata, trackerdict):
     """
     Generates daylighting data for a 1-axis tracker configuration in the simulation folder using bifacial_radiance.
 
@@ -232,23 +232,23 @@ def gen_DayLit1Axis_Local(name_folder, metdata, trackerdict):
         # Display an error if the folder is not found in the JSON data
         print(f"Folder '{name_folder}' not found.")
 
-# gen_CumSky_Local(name_folder= "Test_2", 
+# genCumSky_Local(name_folder= "Test_2", 
 # gencumsky_path="EPWs/metdata_temp.csv", 
 # savefile= "eje")
 
-# gen_CumSky1axis_Local(name_folder= "Test_1",
+# genCumSky1axis_Local(name_folder= "Test_1",
 # trackerdict=None)
 
-# gen_Daylit_Local(name_folder="Test_2", 
+# genDaylit_Local(name_folder="Test_2", 
 # timeindex=420, 
 # metdata=True, debug=False)
 
-# gen_Daylit2Manual_Local(name_folder="Test_2", 
+# genDaylit2Manual_Local(name_folder="Test_2", 
 # dni =40, 
 # dhi =45, 
 # sunalt=90,
 # sunaz =45)
 
-# gen_DayLit1Axis_Local(name_folder="Test_2", 
+# genDayLit1Axis_Local(name_folder="Test_2", 
 # metdata=False, 
 # trackerdict=None)

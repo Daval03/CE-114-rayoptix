@@ -4,7 +4,7 @@ import pickle
 from utils.json_folder_utils import *
 from utils.metadata_utils import *
 
-def set_AnalysisObj_Local(name_folder, pathfile, name, hpc):
+def setAnalysisObj_Local(name_folder, pathfile, name, hpc):
     # Path to the JSON file where simulation folders are stored
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     
@@ -24,7 +24,7 @@ def set_AnalysisObj_Local(name_folder, pathfile, name, hpc):
         # Display an error if the folder is not found in the JSON data
         print(f"Folder '{name_folder}' not found.")
 
-def set_moduleAnalysis_Local(name_folder, pathfile):
+def setmoduleAnalysis_Local(name_folder, pathfile):
     # Path to the JSON file where simulation folders are stored
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     
@@ -61,4 +61,4 @@ def set_moduleAnalysis_Local(name_folder, pathfile):
         # Display an error if the folder is not found in the JSON data
         print(f"Folder '{name_folder}' not found.")
 
-#set_AnalysisObj_Local(name_folder="Test_1", pathOctfile="//", name=None, hpc=False)
+#setAnalysisObj_Local(name_folder="Test_1", pathOctfile="//", name=None, hpc=False)
