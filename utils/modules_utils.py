@@ -44,7 +44,7 @@ def build_cell_module(moduleObj, cell_data):
             ycellgap=ycellgap, 
             centerJB=centerJB,
             recompile=recompile)
-        print("Bien")
+        print("CellModule has been added")
 
 def build_tube(moduleObj,tube_data):
     """
@@ -83,7 +83,7 @@ def build_tube(moduleObj,tube_data):
             axisofrotation=axisofrotation,
             visible=visible,
             recompile=recompile)
-        print("Bien1")
+        print("Torquetube has been added")
 
 def build_omega(moduleObj, omega_data):
     """
@@ -128,7 +128,7 @@ def build_omega(moduleObj, omega_data):
             y_omega=y_omega,
             mod_overlap=mod_overlap,
             recompile=recompile)
-        print("Bien2")
+        print("Omega has been added")
 
 def build_frame(moduleObj, frame_data):
     """
@@ -167,4 +167,4 @@ def build_frame(moduleObj, frame_data):
             nSides_frame=nSides_frame,
             frame_width=frame_width,
             recompile=recompile)
-        print("Bien3")
+        print("Frame has been added")
