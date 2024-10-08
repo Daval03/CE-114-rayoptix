@@ -1,10 +1,9 @@
 from utils.json_folder_utils import *
-from utils.scene_utils import set_ground_properties
+from utils.scene_utils import *
 from utils.csv_folder_utils import load_params_from_csv
 import bifacial_radiance as br
 import json
 import pickle
-
 
 def setGround_Local(name_folder, material=None, material_file=None):
     """
@@ -341,13 +340,143 @@ def makeOct1axis_Local(name_folder,trackerdict,singleindex,customname):
         # Display an error if the folder is not found in the JSON data
         print(f"Folder '{name_folder}' not found.")
 
+def showScene_Local(name_folder):
+    """
+    Displays the scene for a bifacial radiance simulation.
 
-##
-#Falta showScene, makeCustomObject y appendtoScene 
-##
+    Parameters
+    ----------
+    name_folder : str
+        The name of the folder that contains the simulation data.
+
+    Returns
+    -------
+    None
+    """
+    # Path to the JSON file where simulation folders are stored
+    json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
+    # Load the data from the JSON file
+    data = load_data(json_file)
+    # Check if the folder name exists in the loaded data
+    if name_folder in data:
+        # Retrieve the folder path from the JSON data
+        folder_path = data[name_folder]
+        # Combine folder_path with name_folder to get the full path
+        full_path = os.path.join(folder_path, name_folder)
+        
+        red_save = os.path.join(folder_path, "save.pickle")
+        red = br.load.loadRadianceObj(red_save)
+
+        original_path = os.getcwd()
+        os.chdir(folder_path)
+        
+        red.scene.showScene()
+
+        os.chdir(original_path)
+        red.save(red_save)
+    else:
+        # Display an error if the folder is not found in the JSON data
+        print(f"Folder '{name_folder}' not found.")
+
+def makeCustomObject_Local(name_folder, pathCSV):
+    """
+    Creates a custom object for a bifacial radiance simulation using parameters from a CSV file.
+
+    Parameters
+    ----------
+    name_folder : str
+        The name of the folder that contains the simulation data.
+    pathCSV : str
+        The path to the CSV file containing custom object parameters.
+
+    Returns
+    -------
+    None
+    """
+    # Path to the JSON file where simulation folders are stored
+    json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
+    # Load the data from the JSON file
+    data = load_data(json_file)
+    # Check if the folder name exists in the loaded data
+    if name_folder in data:
+        # Retrieve the folder path from the JSON data
+        folder_path = data[name_folder]
+        # Combine folder_path with name_folder to get the full path
+        full_path = os.path.join(folder_path, name_folder)
+        red_save = os.path.join(folder_path, "save.pickle")
+        red = br.load.loadRadianceObj(red_save)
+        
+        # Load CSV parameters
+        object_params = load_params_from_csv(pathCSV)
+        name = object_params.get('name')
+        text = object_params.get('text')
+
+        if not object_params:
+            print("CSV files are missing.")
+            return
+        else:
+            original_path = os.getcwd()
+            os.chdir(folder_path)
+
+            red.makeCustomObject(name=name, text=text)
+            
+            os.chdir(original_path)
+            red.save(red_save)
+    else:
+        # Display an error if the folder is not found in the JSON data
+        print(f"Folder '{name_folder}' not found.")
+
+def appendtoScene_Local(name_folder, radfile, pathObject, text):
+    """
+    Appends a custom object to the scene for a bifacial radiance simulation.
+
+    Parameters
+    ----------
+    name_folder : str
+        The name of the folder that contains the simulation data.
+    radfile : str
+        Whether to use a radiance file in the scene.
+    pathObject : str
+        The path to the custom object file to be appended to the scene.
+    text : str
+        Additional text to include with the object in the scene.
+
+    Returns
+    -------
+    None
+    """
+    # Path to the JSON file where simulation folders are stored
+    json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
+    # Load the data from the JSON file
+    data = load_data(json_file)
+    # Check if the folder name exists in the loaded data
+    if name_folder in data:
+        # Retrieve the folder path from the JSON data
+        folder_path = data[name_folder]
+        # Combine folder_path with name_folder to get the full path
+        full_path = os.path.join(folder_path, name_folder)
+        red_save = os.path.join(folder_path, "save.pickle")
+        red = br.load.loadRadianceObj(red_save)
+        radfile = str_to_bool(radfile)
+        
+        if radfile and os.path.exists(pathObject):
+            original_path = os.getcwd()
+            os.chdir(folder_path)
+            red.appendtoScene(radfile=red.scene.radfiles, customObject=pathObject, text=text)
+            os.chdir(original_path)
+        else:
+            print("pathRadfile or pathObject doesn't exist")
+        red.save(red_save)
+    else:
+        # Display an error if the folder is not found in the JSON data
+        print(f"Folder '{name_folder}' not found.")
+
+#appendtoScene_Local("Test_1", "True", "C:/Users/cambr/bifacial_radiance/TEMP/Test_1/objects/Post1.rad", "!xform -rz 0")
+#makeCustomObject_Local("Test_1", "C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/makeObject_params.csv")
+#showScene_Local("Test_1")
 #setGround_Local("Test_1", material=0.2, material_file= None) 
 #set1axis_Local("Test_1", "C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/set1axis_params.csv")
-#makeScene_Local("Test_2", "C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/makeScene_params.csv")
+#makeScene_Local("Test_1", "C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/makeScene_params.csv")
 #makeScene1axis_Local("Test_2", "C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/makeScene1axis_params.csv")
 #makeOct_Local("Test_2", octname=None)
 #makeOct1axis_Local("Test_2", trackerdict=False, singleindex=None, customname=None)

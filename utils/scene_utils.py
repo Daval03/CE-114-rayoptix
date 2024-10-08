@@ -65,3 +65,34 @@ def set_ground_properties(radianceobj, ground_type):
     else:
         # Throw an error if the ground type doesn't exist, no funny business here!
         raise ValueError(f"Ground type '{ground_type}' not recognized.")
+
+def str_to_bool(value):
+    """
+    Converts a string to a boolean value.
+    Parameters
+    ----------
+    value : str
+        The string value to convert (e.g., 'true', 'false', '1', '0').
+
+    Returns
+    -------
+    bool
+        The corresponding boolean value.
+    
+    Raises
+    ------
+    ValueError
+        If the value cannot be converted to a boolean.
+    """
+    # Convertir a minúsculas para asegurar que no sea sensible a mayúsculas/minúsculas
+    value = value.lower()
+    
+    # Definir los valores que deberían considerarse como True
+    if value in ['true', '1', 'yes', 'y']:
+        return True
+    # Definir los valores que deberían considerarse como False
+    elif value in ['false', '0', 'no', 'n']:
+        return False
+    else:
+        # Opción para manejar valores que no son ni True ni False válidos
+        raise ValueError(f"Cannot convert {value} to a boolean.")
