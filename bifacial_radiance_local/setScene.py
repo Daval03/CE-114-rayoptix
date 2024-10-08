@@ -478,5 +478,5 @@ def appendtoScene_Local(name_folder, radfile, pathObject, text):
 #set1axis_Local("Test_1", "C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/set1axis_params.csv")
 #makeScene_Local("Test_1", "C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/makeScene_params.csv")
 #makeScene1axis_Local("Test_2", "C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/makeScene1axis_params.csv")
-#makeOct_Local("Test_2", octname=None)
+#makeOct_Local("Test_1", octname=None)
 #makeOct1axis_Local("Test_2", trackerdict=False, singleindex=None, customname=None)
