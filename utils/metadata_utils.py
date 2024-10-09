@@ -2,27 +2,48 @@ import pickle
 import os
 def save_variable(folder_path, filename, variable):
     """
-    Saves a variable to a .pkl file inside the 'metadata' folder.
-    
-    :param folder_path: Path to the base folder.
-    :param filename: Name of the file (without the .pkl extension).
-    :param variable: The variable to be saved.
+    Saves a variable to a .pkl file inside the specified folder.
+
+    Parameters
+    ----------
+    folder_path : str
+        Path to the base folder where the .pkl file will be saved.
+    filename : str
+        Name of the file (without the .pkl extension).
+    variable : any
+        The variable to be saved in the .pkl file.
+
+    Returns
+    -------
+    None
     """
-    full_path = os.path.join(folder_path, "metadata", f"{filename}.pkl")
-        
+    full_path = os.path.join(folder_path, f"{filename}.pkl")
     # Save the variable to the file
     with open(full_path, 'wb') as f:
         pickle.dump(variable, f)
 
 def load_variable(folder_path, filename):
     """
-    Loads a variable from a .pkl file inside the 'metadata' folder.
-    
-    :param folder_path: Path to the base folder.
-    :param filename: Name of the file (without the .pkl extension).
-    :return: The variable loaded from the file.
+    Loads a variable from a .pkl file inside the specified folder.
+
+    Parameters
+    ----------
+    folder_path : str
+        Path to the base folder where the .pkl file is located.
+    filename : str
+        Name of the file (without the .pkl extension).
+
+    Returns
+    -------
+    any
+        The variable loaded from the .pkl file.
+
+    Raises
+    ------
+    FileNotFoundError
+        If the specified .pkl file does not exist.
     """
-    full_path = os.path.join(folder_path, "metadata", f"{filename}.pkl")
+    full_path = os.path.join(folder_path, f"{filename}.pkl")
     
     # Load the variable from the file
     if os.path.exists(full_path):

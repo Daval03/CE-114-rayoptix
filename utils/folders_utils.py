@@ -5,7 +5,18 @@ from utils.json_folder_utils import *
 import shutil
 
 def move_epws_folder(folder_path):
-    """Moves the EPWs folder from the current working directory to the specified destination."""
+    """
+    Moves the 'EPWs' folder from the current working directory to the specified destination.
+
+    Parameters
+    ----------
+    folder_path : str
+        The destination folder path where the 'EPWs' folder should be moved.
+
+    Returns
+    -------
+    None
+    """
     # Define the source and destination of the EPWs folder
     epws_source = os.path.join(os.getcwd(), "EPWs")  # Assuming it gets created in the current working directory
     epws_destination = os.path.join(folder_path, "EPWs")
@@ -26,8 +37,20 @@ def move_epws_folder(folder_path):
         print(f"EPWs folder not found at: {epws_source}")
 
 def create_folder(folder_path, name_folder):
-    """Creates a folder if it doesn't exist and initializes a RadianceObj.
-    Also saves folder_path and name_folder to a JSON file if name_folder is unique.
+    """
+    Creates a folder at the specified path if it doesn't already exist and initializes a RadianceObj.
+    Also saves the folder path and name_folder in a JSON file if name_folder is unique.
+
+    Parameters
+    ----------
+    folder_path : str
+        The path where the new folder should be created.
+    name_folder : str
+        The unique name for the folder. It will be used as the key in the JSON file.
+
+    Returns
+    -------
+    None
     """
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     
@@ -63,7 +86,22 @@ def create_folder(folder_path, name_folder):
         print(f"Error: {e}")
 
 def setup_simulation_folder(folder_path: str, name_folder: str, use_absolute=True):
-    """Sets up the simulation folder at the specified path."""
+    """
+    Sets up a simulation folder at the specified path.
+
+    Parameters
+    ----------
+    folder_path : str
+        The path where the simulation folder should be set up.
+    name_folder : str
+        The name to assign to the simulation folder.
+    use_absolute : bool, optional
+        Whether to use an absolute path for folder creation. Default is True.
+
+    Returns
+    -------
+    None
+    """
     folder_path = os.path.normpath(folder_path)
     create_folder(folder_path, name_folder)
 

@@ -1,7 +1,21 @@
 import os
 import csv
 def convert_value(value):
-    """Convert the string value to an appropriate type (int, float, None, bool, or str)."""
+    """
+    Convert the string value to an appropriate type (int, float, None, bool, or str).
+
+    Parameters
+    ----------
+    value : str or list
+        The value to be converted. Can be a string, list, or already typed value.
+
+    Returns
+    -------
+    int, float, None, bool, str
+        Returns the converted value. Converts to int or float if possible, 
+        booleans for 'true'/'false' values, None for empty strings, 
+        or returns the original string or list.
+    """
     if isinstance(value, list):  # Check if value is a list
         return ', '.join(map(str, value))  # Join list elements as a string
     elif isinstance(value, str):  # Only convert if it's a string
@@ -20,7 +34,20 @@ def convert_value(value):
     return value  # Return the value as is if it's not a string or list
 
 def get_csv(pathCSV):
-    """Reads a CSV file and returns a list of dictionaries with all its data."""
+    """
+    Reads a CSV file and returns a list of dictionaries with all its data.
+
+    Parameters
+    ----------
+    pathCSV : str
+        The path to the CSV file to be read.
+
+    Returns
+    -------
+    list of dict or None
+        Returns a list of dictionaries where each dictionary represents a row from the CSV file. 
+        If the file cannot be found or decoded, returns None.
+    """
     data = []
     try:
         # Open the CSV file
@@ -44,6 +71,20 @@ def get_csv(pathCSV):
 
 
 def load_params_from_csv(path):
-    """Load CSV and return the first row of parameters."""
+    """
+    Convert the string value to an appropriate type (int, float, None, bool, or str).
+
+    Parameters
+    ----------
+    value : str or list
+        The value to be converted. Can be a string, list, or already typed value.
+
+    Returns
+    -------
+    int, float, None, bool, str
+        Returns the converted value. Converts to int or float if possible, 
+        booleans for 'true'/'false' values, None for empty strings, 
+        or returns the original string or list.
+    """
     params = get_csv(path)
     return params[0] if params else None
