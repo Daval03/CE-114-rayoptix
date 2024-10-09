@@ -184,13 +184,14 @@ def makeAnalysis_Local(name_folder, octfile, name, frontscan, backscan, plotflag
         # Display an error if the folder is not found in the JSON data
         print(f"Folder '{name_folder}' not found.")
 
-makeAnalysis_Local(name_folder="Test_1", 
-octfile="C:/Users/cambr/bifacial_radiance/TEMP/Tutorial_11/tutorial_11.oct", 
-name="XD", 
-frontscan="C:/Users/cambr/bifacial_radiance/TEMP/Test_1/frontscan.pkl", 
-backscan="C:/Users/cambr/bifacial_radiance/TEMP/Test_1/backscan.pkl", 
-plotflag=False, 
-accuracy="high", 
-RGB=False)
+print("hola")
+# makeAnalysis_Local(name_folder="Test_1", 
+# octfile="C:/Users/cambr/bifacial_radiance/TEMP/Tutorial_11/tutorial_11.oct", 
+# name="XD", 
+# frontscan="C:/Users/cambr/bifacial_radiance/TEMP/Test_1/frontscan.pkl", 
+# backscan="C:/Users/cambr/bifacial_radiance/TEMP/Test_1/backscan.pkl", 
+# plotflag=False, 
+# accuracy="high", 
+# RGB=False)
 #makeAnalysisObj_Local(name_folder="Test_1", pathfile="C:/Users/cambr/bifacial_radiance/TEMP/Tutorial_11/tutorial_11.oct", name=None, hpc=False)
 #setmoduleAnalysis_Local(name_folder="Test_1", pathCSV="C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/moduleAnalysis_params.csv")

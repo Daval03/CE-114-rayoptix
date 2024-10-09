@@ -1,6 +1,6 @@
 import os
 import json
-from bifacial_radiance import RadianceObj
+import bifacial_radiance as br
 from utils.json_folder_utils import *
 import shutil
 
@@ -66,7 +66,7 @@ def create_folder(folder_path, name_folder):
             # Create the folder if it doesn't exist
             if not os.path.exists(folder_path):
                 os.makedirs(folder_path)
-                red = RadianceObj(name_folder, str(folder_path)) 
+                red = br.RadianceObj(name_folder, str(folder_path)) 
                 red_save = os.path.join(folder_path, "save.pickle")
                 red.save(red_save)
 
@@ -111,4 +111,4 @@ def setup_simulation_folder(folder_path: str, name_folder: str, use_absolute=Tru
 ##
 # Example call
 
-#setup_simulation_folder("C:/Users/cambr/bifacial_radiance/TEMP/Test_1", "Test_1", True)
+#setup_simulation_folder("C:/Users/cambr/bifacial_radiance/TEMP/Test_99", "Test_99", True)
