@@ -16,190 +16,189 @@ def cli():
 
 @cli.command()
 @click.option('--path', type=str, required=True, help='Path of configuration')
-@click.option('--nameFolder', type=str, required=True, help='Name of the folder')
-@click.option('--use_absolute', is_flag=True, help='If it uses abs paths')
-def setup_folders(path, name, use_absolute):
+@click.option('--namefolder', type=str, required=True, help='Name of the folder')
+def setup_folders(path, namefolder):
     """Config folders"""
-    setup_simulation_folder(path, nameFolder, use_absolute)
-    click.echo(f'Setting up with path: {path}, name: {nameFolder} , absolute: {use_absolute}')
+    create_folder(folder_path=path, name_folder=namefolder)
+    click.echo(f'Setting up with path: {path}, name: {namefolder}')
 
 ########################### setWeather
 
 @cli.command()
-@click.option('--nameFolder', type=str, required=True, help='Name of the folder to retrieve demo')
-@click.option('--pathCSV', type=str, required=True, help='CSV path for the variables')
-def set_Weather(nameFolder, pathCSV):
+@click.option('--namefolder', type=str, required=True, help='Name of the folder to retrieve demo')
+@click.option('--pathcsv', type=str, required=True, help='CSV path for the variables')
+def set_weather(namefolder, pathcsv):
     """Set the EPW files"""
-    setWeatherFiles_local(nameFolder, pathCSV)
+    setWeatherFiles_local(namefolder, pathcsv)
 
 ########################### setAnalysisObj
 
 @cli.command()
-@click.option('--nameFolder', type=str, required=True, help='Name of the folder that contains the simulation data')
+@click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
 @click.option('--pathfile', type=str, required=True, help='Path to the OCT file used in the simulation')
 @click.option('--name', type=str, required=True, help='Name assigned to the analysis object')
 @click.option('--hpc', type=bool, required=True, help='Flag to indicate if HPC is used')
-def make_analysis_obj(nameFolder, pathfile, name, hpc):
+def make_analysis_obj(namefolder, pathfile, name, hpc):
     """Sets the Analysis Object for a bifacial radiance simulation."""
-    makeAnalysisObj_Local(nameFolder, pathfile, name, hpc)
+    makeAnalysisObj_Local(namefolder, pathfile, name, hpc)
 
 @cli.command()
-@click.option('--nameFolder', type=str, required=True, help='Name of the folder that contains the simulation data')
-@click.option('--pathCSV', type=str, required=True, help='CSV path for the variables')
-def set_module_analysis(nameFolder, pathCSV):
+@click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
+@click.option('--pathcsv', type=str, required=True, help='CSV path for the variables')
+def set_module_analysis(namefolder, pathcsv):
     """Configures and runs the module analysis for a bifacial radiance simulation."""
-    setmoduleAnalysis_Local(nameFolder, pathCSV)
+    setmoduleAnalysis_Local(namefolder, pathcsv)
 
 @cli.command()
-@click.option('--nameFolder', type=str, required=True, help='Name of the folder that contains the simulation data')
+@click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
 @click.option('--octfile', type=str, required=True, help='Path to the OCT file used in the simulation')
 @click.option('--name', type=str, required=True, help='Name assigned to the analysis object')
 @click.option('--frontscan', type=str, required=True, help='Path to the front scan points data')
 @click.option('--backscan', type=str, required=True, help='Path to the back scan points data')
 @click.option('--plotflag', type=bool, required=True, help='Flag to indicate if the result should be plotted')
 @click.option('--accuracy', type=str, required=True, help='Accuracy level for the raytracing simulation (low or high)')
-@click.option('--RGB', type=bool, required=True, help='Flag to indicate if analysis should be done in RGB')
-def make_analysis(nameFolder, octfile, name, frontscan, backscan, plotflag, accuracy, RGB):
+@click.option('--rgb', type=bool, required=True, help='Flag to indicate if analysis should be done in RGB')
+def make_analysis(namefolder, octfile, name, frontscan, backscan, plotflag, accuracy, rgb):
     """Performs the analysis for a bifacial radiance simulation."""
-    makeAnalysis_Local(nameFolder, octfile, name, frontscan, backscan, plotflag, accuracy, RGB)
+    makeAnalysis_Local(namefolder, octfile, name, frontscan, backscan, plotflag, accuracy, rgb)
 
 ########################### setModules
 
 @cli.command()
-@click.option('--nameFolder', type=str, required=True, help='Name of the folder containing the simulation data.')
-@click.option('--pathCSV_makeModule', type=str, required=True, help='Path to the CSV file for general module parameters.')
-@click.option('--pathCSV_cellModule', type=str, required=True, help='Path to the CSV file for cell module parameters.')
-@click.option('--pathCSV_tubeParams', type=str, required=True, help='Path to the CSV file for torque tube parameters.')
-@click.option('--pathCSV_omegaParams', type=str, required=True, help='Path to the CSV file for omega profile parameters.')
-@click.option('--pathCSV_frameParams', type=str, required=True, help='Path to the CSV file for frame parameters.')
-def make_module(nameFolder, pathCSV_makeModule, pathCSV_cellModule, pathCSV_tubeParams, pathCSV_omegaParams, pathCSV_frameParams):
+@click.option('--namefolder', type=str, required=True, help='Name of the folder containing the simulation data.')
+@click.option('--pathcsv_makemodule', type=str, required=True, help='Path to the CSV file for general module parameters.')
+@click.option('--pathcsv_cellmodule', type=str, required=True, help='Path to the CSV file for cell module parameters.')
+@click.option('--pathcsv_tubeparams', type=str, required=True, help='Path to the CSV file for torque tube parameters.')
+@click.option('--pathcsv_omegaparams', type=str, required=True, help='Path to the CSV file for omega profile parameters.')
+@click.option('--pathcsv_frameparams', type=str, required=True, help='Path to the CSV file for frame parameters.')
+def make_module(namefolder, pathcsv_makemodule, pathcsv_cellmodule, pathcsv_tubeparams, pathcsv_omegaparams, pathcsv_frameparams):
     """Creates a bifacial radiance module based on CSV parameters."""
-    makeModule_Local(nameFolder, pathCSV_makeModule, pathCSV_cellModule, pathCSV_tubeParams, pathCSV_omegaParams, pathCSV_frameParams)
+    makeModule_Local(namefolder, pathcsv_makemodule, pathcsv_cellmodule, pathcsv_tubeparams, pathcsv_omegaparams, pathcsv_frameparams)
 
 @cli.command()
-@click.option('--nameFolder', type=str, required=True, help='Name of the folder containing the simulation data.')
-@click.option('--pathCSV', type=str, required=True, help='Path to the CSV file for torque tube parameters.')
-def add_torque_tube(nameFolder, pathCSV):
+@click.option('--namefolder', type=str, required=True, help='Name of the folder containing the simulation data.')
+@click.option('--pathcsv', type=str, required=True, help='Path to the CSV file for torque tube parameters.')
+def add_torque_tube(namefolder, pathcsv):
     """Adds a torque tube to a bifacial radiance module."""
-    addTorqueTube_Local(nameFolder, pathCSV)
+    addTorqueTube_Local(namefolder, pathcsv)
 
 @cli.command()
-@click.option('--nameFolder', type=str, required=True, help='Name of the folder containing the simulation data.')
-@click.option('--pathCSV', type=str, required=True, help='Path to the CSV file for cell module parameters.')
-def add_cell_module(nameFolder, pathCSV):
+@click.option('--namefolder', type=str, required=True, help='Name of the folder containing the simulation data.')
+@click.option('--pathcsv', type=str, required=True, help='Path to the CSV file for cell module parameters.')
+def add_cell_module(namefolder, pathcsv):
     """Adds a cell module to a bifacial radiance module."""
-    addCellModule_Local(nameFolder, pathCSV)
+    addCellModule_Local(namefolder, pathcsv)
 
 @cli.command()
-@click.option('--nameFolder', type=str, required=True, help='Name of the folder containing the simulation data.')
-@click.option('--pathCSV', type=str, required=True, help='Path to the CSV file for omega profile parameters.')
-def add_omega(nameFolder, pathCSV):
+@click.option('--namefolder', type=str, required=True, help='Name of the folder containing the simulation data.')
+@click.option('--pathcsv', type=str, required=True, help='Path to the CSV file for omega profile parameters.')
+def add_omega(namefolder, pathcsv):
     """Adds an omega profile to a bifacial radiance module."""
-    addOmega_Local(nameFolder, pathCSV)
+    addOmega_Local(namefolder, pathcsv)
 
 @cli.command()
-@click.option('--nameFolder', type=str, required=True, help='Name of the folder containing the simulation data.')
-@click.option('--pathCSV', type=str, required=True, help='Path to the CSV file for frame parameters.')
-def add_frame(nameFolder, pathCSV):
+@click.option('--namefolder', type=str, required=True, help='Name of the folder containing the simulation data.')
+@click.option('--pathcsv', type=str, required=True, help='Path to the CSV file for frame parameters.')
+def add_frame(namefolder, pathcsv):
     """Adds a frame to a bifacial radiance module."""
-    addFrame_Local(nameFolder, pathCSV)
+    addFrame_Local(namefolder, pathcsv)
 
 @cli.command()
-@click.option('--nameFolder', type=str, required=True, help='Name of the folder containing the simulation data.')
-def show_module(nameFolder):
+@click.option('--namefolder', type=str, required=True, help='Name of the folder containing the simulation data.')
+def show_module(namefolder):
     """Displays the current module configuration."""
-    showModule_Local(nameFolder)
+    showModule_Local(namefolder)
 
 @cli.command()
-@click.option('--nameFolder', type=str, required=True, help='Name of the folder containing the simulation data.')
+@click.option('--namefolder', type=str, required=True, help='Name of the folder containing the simulation data.')
 @click.option('--name', type=str, required=True, help='Name of the module file to read.')
-def read_module(nameFolder, name):
+def read_module(namefolder, name):
     """Reads and loads a module configuration file."""
-    readModule_Local(nameFolder, name)
+    readModule_Local(namefolder, name)
 
 @cli.command()
-@click.option('--nameFolder', type=str, required=True, help='Name of the folder containing the simulation data.')
-@click.option('--rewriteModulefile', is_flag=True, help='Rewrite the existing module file with the compiled data.')
+@click.option('--namefolder', type=str, required=True, help='Name of the folder containing the simulation data.')
+@click.option('--rewritemodulefile', is_flag=True, help='Rewrite the existing module file with the compiled data.')
 @click.option('--json', type=str, required=True, help='JSON string with parameters to compile into the module configuration.')
-def compile_text(nameFolder, rewriteModulefile, json):
+def compile_text(namefolder, rewritemodulefile, json):
     """Compiles text data for a module configuration."""
-    compileText_Local(nameFolder, rewriteModulefile, json)
+    compileText_Local(namefolder, rewritemodulefile, json)
 
 @cli.command()
-@click.option('--nameFolder', type=str, required=True, help='Name of the folder containing the simulation data.')
-@click.option('--materialPath', type=str, required=True, help='Path to the folder containing material files.')
-def return_material_files(nameFolder, materialPath):
+@click.option('--namefolder', type=str, required=True, help='Name of the folder containing the simulation data.')
+@click.option('--materialpath', type=str, required=True, help='Path to the folder containing material files.')
+def return_material_files(namefolder, materialpath):
     """Returns material file paths for a bifacial radiance simulation."""
-    returnMaterialFiles_Local(nameFolder, materialPath)
+    returnMaterialFiles_Local(namefolder, materialpath)
 
 ########################### setScene
 
 @cli.command()
-@click.option('--nameFolder', type=str, required=True, help='Name of the folder that contains the simulation data')
+@click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
 @click.option('--material', type=str, default=None, help='Material name or albedo value for the ground')
-@click.option('--materialFile', type=str, default=None, help='Path to the material file')
-def set_Ground(nameFolder, material, materialFile):
+@click.option('--materialfile', type=str, default=None, help='Path to the material file')
+def set_ground(namefolder, material, materialfile):
     """Set the ground material for the simulation"""
-    setGround_Local(nameFolder, material, materialFile)
+    setGround_Local(namefolder, material, materialfile)
 
 @cli.command()
-@click.option('--nameFolder', type=str, required=True, help='Name of the folder that contains the simulation data')
-@click.option('--pathCSV', type=str, required=True, help='Path to the CSV file containing the parameters')
-def set_1axis(nameFolder, pathCSV):
+@click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
+@click.option('--pathcsv', type=str, required=True, help='Path to the CSV file containing the parameters')
+def set_1axis(namefolder, pathcsv):
     """Set 1-axis tracker configuration"""
-    set1axis_Local(nameFolder, pathCSV)
+    set1axis_Local(namefolder, pathcsv)
 
 @cli.command()
-@click.option('--nameFolder', type=str, required=True, help='Name of the folder that contains the simulation data')
-@click.option('--pathCSV', type=str, required=True, help='Path to the CSV file containing scene parameters')
-def make_Scene(nameFolder, pathCSV):
+@click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
+@click.option('--pathcsv', type=str, required=True, help='Path to the CSV file containing scene parameters')
+def make_scene(namefolder, pathcsv):
     """Create a scene based on CSV parameters"""
-    makeScene_Local(nameFolder, pathCSV)
+    makeScene_Local(namefolder, pathcsv)
 
 @cli.command()
-@click.option('--nameFolder', type=str, required=True, help='Name of the folder that contains the simulation data')
-@click.option('--pathCSV', type=str, required=True, help='Path to the CSV file containing parameters')
-def make_Scene1axis(nameFolder, pathCSV):
+@click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
+@click.option('--pathcsv', type=str, required=True, help='Path to the CSV file containing parameters')
+def make_scene1axis(namefolder, pathcsv):
     """Create a 1-axis tracker scene based on CSV parameters"""
-    makeScene1axis_Local(nameFolder, pathCSV)
+    makeScene1axis_Local(namefolder, pathcsv)
 
 @cli.command()
-@click.option('--nameFolder', type=str, required=True, help='Name of the folder that contains the simulation data')
+@click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
 @click.option('--octname', type=str, required=True, help='Name for the .oct file')
-def make_Oct(nameFolder, octname):
+def make_oct(namefolder, octname):
     """Generate an .oct file for the simulation"""
-    makeOct_Local(nameFolder, octname)
+    makeOct_Local(namefolder, octname)
 
 @cli.command()
-@click.option('--nameFolder', type=str, required=True, help='Name of the folder that contains the simulation data')
+@click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
 @click.option('--trackerdict', type=bool, required=True, help='Tracker configuration dictionary')
-@click.option('--singleIndex', type=int, required=True, help='Index of the tracker configuration')
-@click.option('--customName', type=str, required=True, help='Custom name for the .oct file')
-def make_Oct1axis(nameFolder, trackerdict, singleIndex, customName):
+@click.option('--singleindex', type=int, required=True, help='Index of the tracker configuration')
+@click.option('--customname', type=str, required=True, help='Custom name for the .oct file')
+def make_oct1axis(namefolder, trackerdict, singleindex, customname):
     """Generate an .oct file for a 1-axis tracker configuration"""
-    makeOct1axis_Local(nameFolder, trackerdict, singleIndex, customName)
+    makeOct1axis_Local(namefolder, trackerdict, singleindex, customname)
 
 @cli.command()
-@click.option('--nameFolder', type=str, required=True, help='Name of the folder that contains the simulation data')
-def show_Scene(nameFolder):
+@click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
+def show_scene(namefolder):
     """Display the scene for the simulation"""
-    showScene_Local(nameFolder)
+    showScene_Local(namefolder)
 
 @cli.command()
-@click.option('--nameFolder', type=str, required=True, help='Name of the folder that contains the simulation data')
-@click.option('--pathCSV', type=str, required=True, help='Path to the CSV file containing custom object parameters')
-def make_CustomObject(nameFolder, pathCSV):
+@click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
+@click.option('--pathcsv', type=str, required=True, help='Path to the CSV file containing custom object parameters')
+def make_customobject(namefolder, pathcsv):
     """Create a custom object based on CSV parameters"""
-    makeCustomObject_Local(nameFolder, pathCSV)
+    makeCustomObject_Local(namefolder, pathcsv)
 
 @cli.command()
-@click.option('--nameFolder', type=str, required=True, help='Name of the folder that contains the simulation data')
+@click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
 @click.option('--radfile', type=bool, required=True, help='Whether to use a radiance file in the scene')
-@click.option('--pathObject', type=str, required=True, help='Path to the custom object file')
+@click.option('--pathobject', type=str, required=True, help='Path to the custom object file')
 @click.option('--text', type=str, required=True, help='Additional text to include with the object in the scene')
-def append_to_Scene(nameFolder, radfile, pathObject, text):
+def append_to_scene(namefolder, radfile, pathobject, text):
     """Append a custom object to the scene"""
-    appendtoScene_Local(nameFolder, radfile, pathObject, text)
+    appendtoScene_Local(namefolder, radfile, pathobject, text)
 
 ########################### setSkyDome
 

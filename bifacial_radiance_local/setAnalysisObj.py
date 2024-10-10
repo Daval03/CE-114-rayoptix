@@ -184,7 +184,7 @@ def makeAnalysis_Local(name_folder, octfile, name, frontscan, backscan, plotflag
         # Display an error if the folder is not found in the JSON data
         print(f"Folder '{name_folder}' not found.")
 
-print("hola")
+#print("hola")
 # makeAnalysis_Local(name_folder="Test_1", 
 # octfile="C:/Users/cambr/bifacial_radiance/TEMP/Tutorial_11/tutorial_11.oct", 
 # name="XD", 

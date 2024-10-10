@@ -52,6 +52,7 @@ def create_folder(folder_path, name_folder):
     -------
     None
     """
+    folder_path = os.path.normpath(folder_path)
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     
     try:
@@ -69,46 +70,20 @@ def create_folder(folder_path, name_folder):
                 red = br.RadianceObj(name_folder, str(folder_path)) 
                 red_save = os.path.join(folder_path, "save.pickle")
                 red.save(red_save)
-
+                
+                # Save the new entry in the JSON
+                data[name_folder] = folder_path
+                save_data(json_file, data)
+                print(f"Data saved: {name_folder} -> {folder_path}")
                 print(f"Folder created at {folder_path}")
             else:
                 print(f"Folder already exists at {folder_path}")
-
-            # Save the new entry in the JSON
-            data[name_folder] = folder_path
-            save_data(json_file, data)
-            print(f"Data saved: {name_folder} -> {folder_path}")
-            
         else:
             print(f"Name '{name_folder}' already exists in {json_file}.")
     
     except Exception as e:
         print(f"Error: {e}")
 
-def setup_simulation_folder(folder_path: str, name_folder: str, use_absolute=True):
-    """
-    Sets up a simulation folder at the specified path.
 
-    Parameters
-    ----------
-    folder_path : str
-        The path where the simulation folder should be set up.
-    name_folder : str
-        The name to assign to the simulation folder.
-    use_absolute : bool, optional
-        Whether to use an absolute path for folder creation. Default is True.
-
-    Returns
-    -------
-    None
-    """
-    folder_path = os.path.normpath(folder_path)
-    create_folder(folder_path, name_folder)
-
-
-##
-# Validar que la ruta no se repita para crear o meter las varas en el json
-##
-# Example call
-
-#setup_simulation_folder("C:/Users/cambr/bifacial_radiance/TEMP/Test_99", "Test_99", True)
+#create_folder("C:/Users/cambr/bifacial_radiance/TEMP/Test_99", "Test_99")
+#create_folder("../../../bifacial_radiance/TEMP/Test_98", "Test_98") 
