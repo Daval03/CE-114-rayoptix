@@ -85,35 +85,24 @@ def set1axis_Local(name_folder, pathCSV):
             print("CSV files are missing.")
             return
 
-        # Extract main module parameters
-        metdata = set1axis_params.get('metdata')
-        azimuth = set1axis_params.get('azimuth')
-        limit_angle = set1axis_params.get('limit_angle')
-        angledelta = set1axis_params.get('angledelta')
-        backtrack = set1axis_params.get('backtrack')
-        gcr = set1axis_params.get('gcr')
-        cumulativesky = set1axis_params.get('cumulativesky')
-        fixed_tilt_angle = set1axis_params.get('fixed_tilt_angle')
-        useMeasuredTrackerAngle = set1axis_params.get('useMeasuredTrackerAngle')
-        #Check if red.module exist
-        if metdata is True:
-            metobj = red.metdata
-        else:
-            metobj = None
+        # Extract and filter the parameters for the 1-axis tracker
+        tracker_params = {key: value for key, value in {
+            'metdata': red.metdata if set1axis_params.get('metdata') else None,
+            'azimuth': set1axis_params.get('azimuth'),
+            'limit_angle': set1axis_params.get('limit_angle'),
+            'angledelta': set1axis_params.get('angledelta'),
+            'backtrack': set1axis_params.get('backtrack'),
+            'gcr': set1axis_params.get('gcr'),
+            'cumulativesky': set1axis_params.get('cumulativesky'),
+            'fixed_tilt_angle': set1axis_params.get('fixed_tilt_angle'),
+            'useMeasuredTrackerAngle': set1axis_params.get('useMeasuredTrackerAngle')
+        }.items() if value is not None}
 
         original_path = os.getcwd()
         os.chdir(folder_path)
         
-        red.set1axis(metdata=metobj,
-        azimuth=azimuth,
-        limit_angle=limit_angle,
-        angledelta=angledelta,
-        backtrack=backtrack,
-        gcr=gcr,
-        cumulativesky=cumulativesky,
-        fixed_tilt_angle=fixed_tilt_angle,
-        useMeasuredTrackerAngle=useMeasuredTrackerAngle)
-        
+        red.set1axis(**tracker_params)
+
         # Save the object back using pickle
         os.chdir(original_path)
         red.save(red_save)
@@ -154,30 +143,22 @@ def makeScene_Local(name_folder, pathCSV):
         if not makeScene_params:
             print("CSV files are missing.")
             return
-
-        # Extract main module parameters
-        module  = makeScene_params.get('module')
-        sceneDict = {
-            'tilt': makeScene_params.get('tilt'),
-            'clearance_height': makeScene_params.get('clearance_height'),
-            'pitch': makeScene_params.get('pitch'),
-            'azimuth': makeScene_params.get('azimuth'),
-            'nMods': makeScene_params.get('nMods'),
-            'nRows': makeScene_params.get('nRows'),
-            'hub_height': makeScene_params.get('hub_height'),
-        }
+        
+        # Extract and filter scene parameters
+        scene_params = {key: makeScene_params.get(key) for key in [
+            'tilt', 'pitch', 'azimuth', 'nMods', 'nRows', 'hub_height', 'clearance_height'
+        ] if makeScene_params.get(key) is not None}
+        
         radname = makeScene_params.get('radname')
-        #Check if red.module exist
-        if module is True:
-            moduleObj = red.module
-        else:
-            moduleObj = None
+        # Check if red.module exists
+        moduleObj = makeScene_params.get('module')
 
         original_path = os.getcwd()
         os.chdir(folder_path)
-        red.makeScene(module=moduleObj, sceneDict=sceneDict, radname=radname)
-        os.chdir(original_path)
         
+        red.makeScene(module=moduleObj, sceneDict=scene_params, radname=radname)
+        os.chdir(original_path)
+        print("new scene had been added")
         # Save the object back using pickle
         red.save(red_save)
     else:
@@ -218,30 +199,25 @@ def makeScene1axis_Local(name_folder, pathCSV):
             print("CSV files are missing.")
             return
 
-        # Extract main module parameters
-        module  = makeScene1axis_params.get('module')
-        trackerdict = makeScene1axis_params.get('trackerdict')
-        cumulativesky = makeScene1axis_params.get('cumulativesky')
+        # Extract parameters with filtering
+        trackerdict = red.trackerdict if makeScene1axis_params.get('trackerdict') else None
+        module = red.module if makeScene1axis_params.get('module') else None
         sceneDict = {
             'tilt': makeScene1axis_params.get('tilt'),
             'pitch': makeScene1axis_params.get('pitch'),
             'azimuth': makeScene1axis_params.get('azimuth'),
             'hub_height': makeScene1axis_params.get('hub_height'),
         }
-        #Check if red.trackerdict exist
-        if trackerdict is True:
-            trackerObj = red.trackerdict
-        else:
-            trackerObj = None
-        #Check if red.module exist
-        if module is True:
-            moduleObj = red.module
-        else:
-            moduleObj = None
-        
+        cumulativesky = makeScene1axis_params.get('cumulativesky')
+
+        # Filter the sceneDict to only include parameters with values
+        sceneDict = {key: value for key, value in sceneDict.items() if value is not None}
+
         original_path = os.getcwd()
         os.chdir(folder_path)
-        red.makeScene1axis(trackerdict=trackerObj,module=moduleObj, sceneDict=sceneDict, cumulativesky=cumulativesky)
+
+        # Call the makeScene1axis method with filtered parameters
+        red.makeScene1axis(trackerdict=trackerdict, module=module, sceneDict=sceneDict, cumulativesky=cumulativesky)
         os.chdir(original_path)
         
         # Save the object back using pickle
@@ -288,7 +264,7 @@ def makeOct_Local(name_folder, octname):
         # Display an error if the folder is not found in the JSON data
         print(f"Folder '{name_folder}' not found.")
 
-def makeOct1axis_Local(name_folder,trackerdict,singleindex,customname):
+def makeOct1axis_Local(name_folder, trackerdict, singleindex, customname):
     """
     Generates an .oct file for a 1-axis tracker configuration in the simulation folder using bifacial_radiance.
 
@@ -319,18 +295,16 @@ def makeOct1axis_Local(name_folder,trackerdict,singleindex,customname):
         red_save = os.path.join(folder_path, "save.pickle")
         red = br.load.loadRadianceObj(red_save)
         
-        #Check if red.trackerdict exist
-        if trackerdict is True:
-            trackerObj = red.trackerdict
-        else:
-            trackerObj = None
+        # Initialize trackerObj based on trackerdict value
+        trackerObj = red.trackerdict if trackerdict else None
 
         original_path = os.getcwd()
         os.chdir(folder_path)
         
+        # Call the makeOct1axis method with trackerObj
         red.makeOct1axis(trackerdict=trackerObj,
-        singleindex= singleindex,
-        customname=customname)
+                         singleindex=singleindex,
+                         customname=customname)
 
         os.chdir(original_path)
         

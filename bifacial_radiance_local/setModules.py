@@ -47,76 +47,45 @@ def makeModule_Local(name_folder, pathCSV_makeModule, pathCSV_cellModule, pathCS
     # Load CSV parameters makeModule
     makeModule_params = load_params_from_csv(pathCSV_makeModule)
     if not makeModule_params:
-        print("CSV files are missing.")
+        print("makeModule_params files are missing.")
         return
     else:
-        # Extract main module parameters
-        name = makeModule_params.get('name')
-        x = makeModule_params.get('x')
-        y = makeModule_params.get('y')
-        z = makeModule_params.get('z')
-        modulefile = makeModule_params.get('modulefile')
-        text = makeModule_params.get('text')
-        customtext = makeModule_params.get('customtext') 
-        if customtext is None: customtext = ""
-        rewriteModulefile = makeModule_params.get('rewriteModulefile')
-        glass = makeModule_params.get('glass')
-        numpanels = makeModule_params.get('numpanels')
-        xgap = makeModule_params.get('xgap')
-        ygap = makeModule_params.get('ygap')
-        zgap = makeModule_params.get('zgap')
-        modulematerial = makeModule_params.get('zgmodulematerialap')
-        bifi = makeModule_params.get('bifi')
+        # Extract and filter the main module parameters
+        makeModule_filtered = {key: value for key, value in makeModule_params.items() if value is not None}
+        # Ensure customtext is set to an empty string if it's None
+        if 'customtext' not in makeModule_filtered:
+            makeModule_filtered['customtext'] = ""
+        # Create the module with only the parameters that have values
+        red.makeModule(**makeModule_filtered)
+        print("MainModule has been added")
 
-        # Create the module
-        module = red.makeModule(
-            name=name,
-            x=x,
-            y=y,
-            z=z,
-            modulefile=modulefile,
-            text=text,
-            customtext=customtext,
-            xgap=xgap,
-            ygap=ygap,
-            zgap=zgap,
-            numpanels=numpanels,
-            rewriteModulefile=rewriteModulefile,
-            glass=glass,
-            modulematerial=modulematerial,
-            bifi=bifi)
-        
     # Load CSV parameters addCellModule
     CellModule_params = load_params_from_csv(pathCSV_cellModule)
     if not CellModule_params:
-        print("CSV files are missing.")
-        return
+        print("CellModule_params files are missing.")
     else:
-        build_cell_module(module, CellModule_params)
+        build_cell_module(red, CellModule_params)
     
     # Load CSV parameters pathCSV_tubeParams
     TorqueTube_params = load_params_from_csv(pathCSV_tubeParams)
     if not TorqueTube_params:
-        print("CSV files are missing.")
-        return
+        print("TorqueTube_params files are missing.")
     else:
-        build_tube(module, TorqueTube_params)
+        build_tube(red, TorqueTube_params)
     
     # Load CSV parameters pathCSV_omegaParams
     Omega_params = load_params_from_csv(pathCSV_omegaParams)
     if not Omega_params:
-        print("CSV files are missing.")
-        return
+        print("Omega_params files are missing.")
     else:
-        build_omega(module, Omega_params)
+        build_omega(red, Omega_params)
     
     # Load CSV parameters pathCSV_frameParams
     Frame_params = load_params_from_csv(pathCSV_frameParams)
     if not Frame_params:
-        print("CSV files are missing.")
-        return
+        print("Frame_params files are missing.")
     else:
-        build_frame(module, Frame_params)
+        build_frame(red, Frame_params)
 
     os.chdir(original_path)
     # Save the module and variable
@@ -163,7 +132,7 @@ def addTorqueTube_Local(name_folder, pathCSV):
         print("CSV files are missing.")
         return
     else:
-        build_tube(red.module, TorqueTube_params)
+        build_tube(red, TorqueTube_params)
 
     os.chdir(original_path)
     # Save the module and variable
@@ -203,7 +172,7 @@ def addCellModule_Local(name_folder, pathCSV):
         print("CSV files are missing.")
         return
     else:
-        build_cell_module(red.module, CellModule_params)
+        build_cell_module(red, CellModule_params)
 
     os.chdir(original_path)
     # Save the module and variable
@@ -247,7 +216,7 @@ def addOmega_Local(name_folder, pathCSV):
         print("CSV files are missing.")
         return
     else:
-        build_omega(red.module, Omega_params)
+        build_omega(red, Omega_params)
         
     os.chdir(original_path)
     # Save the module and variable
@@ -290,7 +259,7 @@ def addFrame_Local(name_folder, pathCSV):
         print("CSV files are missing.")
         return
     else:
-        build_frame(red.module, Frame_params)
+        build_frame(red, Frame_params)
         
     os.chdir(original_path)
     # Save the module and variable

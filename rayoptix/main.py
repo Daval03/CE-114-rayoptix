@@ -66,11 +66,11 @@ def make_analysis(namefolder, octfile, name, frontscan, backscan, plotflag, accu
 
 @cli.command()
 @click.option('--namefolder', type=str, required=True, help='Name of the folder containing the simulation data.')
-@click.option('--pathcsv_makemodule', type=str, required=True, help='Path to the CSV file for general module parameters.')
-@click.option('--pathcsv_cellmodule', type=str, required=True, help='Path to the CSV file for cell module parameters.')
-@click.option('--pathcsv_tubeparams', type=str, required=True, help='Path to the CSV file for torque tube parameters.')
-@click.option('--pathcsv_omegaparams', type=str, required=True, help='Path to the CSV file for omega profile parameters.')
-@click.option('--pathcsv_frameparams', type=str, required=True, help='Path to the CSV file for frame parameters.')
+@click.option('--pathcsv_makemodule', type=str, required=False, help='Path to the CSV file for general module parameters.')
+@click.option('--pathcsv_cellmodule', type=str, required=False, help='Path to the CSV file for cell module parameters.')
+@click.option('--pathcsv_tubeparams', type=str, required=False, help='Path to the CSV file for torque tube parameters.')
+@click.option('--pathcsv_omegaparams', type=str, required=False, help='Path to the CSV file for omega profile parameters.')
+@click.option('--pathcsv_frameparams', type=str, required=False, help='Path to the CSV file for frame parameters.')
 def make_module(namefolder, pathcsv_makemodule, pathcsv_cellmodule, pathcsv_tubeparams, pathcsv_omegaparams, pathcsv_frameparams):
     """Creates a bifacial radiance module based on CSV parameters."""
     makeModule_Local(namefolder, pathcsv_makemodule, pathcsv_cellmodule, pathcsv_tubeparams, pathcsv_omegaparams, pathcsv_frameparams)
@@ -135,7 +135,7 @@ def return_material_files(namefolder, materialpath):
 
 @cli.command()
 @click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
-@click.option('--material', type=str, default=None, help='Material name or albedo value for the ground')
+@click.option('--material', callback=validate_material, default=None, help='Material name or albedo value for the ground')
 @click.option('--materialfile', type=str, default=None, help='Path to the material file')
 def set_ground(namefolder, material, materialfile):
     """Set the ground material for the simulation"""
@@ -164,7 +164,7 @@ def make_scene1axis(namefolder, pathcsv):
 
 @cli.command()
 @click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
-@click.option('--octname', type=str, required=True, help='Name for the .oct file')
+@click.option('--octname', type=str, required=False, help='Name for the .oct file')
 def make_oct(namefolder, octname):
     """Generate an .oct file for the simulation"""
     makeOct_Local(namefolder, octname)
@@ -200,53 +200,61 @@ def append_to_scene(namefolder, radfile, pathobject, text):
     """Append a custom object to the scene"""
     appendtoScene_Local(namefolder, radfile, pathobject, text)
 
+@cli.command()
+@click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
+@click.option('--time', type=str, required=True, help='The time to look up in the simulation data')
+def get_timestamp(namefolder, time):
+    """Retrieve a timestamp from the simulation data"""
+    timestamp = getTimeStamp_local(namefolder, time)
+    if timestamp:
+        print(f"Timestamp found: {timestamp}")
+    else:
+        print(f"Timestamp for time '{time}' could not be found.")
+
 ########################### setSkyDome
 
 @cli.command()
-@click.option('--name_folder', type=str, required=True, help='Name of the folder that contains the simulation data')
+@click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
 @click.option('--gencumsky_path', type=str, required=False, help='Path to the custom gencumsky file. If None, default values are used')
 @click.option('--savefile', type=str, required=True, help='Filename to save the cumulative sky file')
-def gen_cum_sky(name_folder, gencumsky_path, savefile):
+def gen_cum_sky(namefolder, gencumsky_path, savefile):
     """Generates a cumulative sky for the simulation folder"""
-    genCumSky_Local(name_folder, gencumsky_path, savefile)
+    genCumSky_Local(namefolder, gencumsky_path, savefile)
 
 @cli.command()
-@click.option('--name_folder', type=str, required=True, help='Name of the folder that contains the simulation data')
+@click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
 @click.option('--trackerdict', type=str, required=True, help='Path to the CSV file with tracker configurations')
-def gen_cum_sky_1axis(name_folder, trackerdict):
+def gen_cum_sky_1axis(namefolder, trackerdict):
     """Generates a cumulative sky for a 1-axis tracker configuration"""
     # Load tracker dictionary from CSV
-    trackerdict_data = load_data(trackerdict)  # Asumimos que esta función carga el CSV
-    genCumSky1axis_Local(name_folder, trackerdict_data)
+    genCumSky1axis_Local(namefolder, trackerdict)
 
 @cli.command()
-@click.option('--name_folder', type=str, required=True, help='Name of the folder that contains the simulation data')
+@click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
 @click.option('--timeindex', type=int, required=True, help='Time index for which the daylighting data should be generated')
-@click.option('--metdata', is_flag=True, help='Flag to use metdata from Radiance object')
-@click.option('--debug', is_flag=True, help='Flag for enabling debug mode')
-def gen_daylit(name_folder, timeindex, metdata, debug):
+@click.option('--metdata', is_flag=True,required=False, help='Flag to use metdata from Radiance object')
+@click.option('--debug', is_flag=True,required=False, help='Flag for enabling debug mode')
+def gen_daylit(namefolder, timeindex, metdata, debug):
     """Generates daylighting data for a specific time index"""
-    genDaylit_Local(name_folder, timeindex, metdata, debug)
+    genDaylit_Local(namefolder, timeindex, metdata, debug)
 
 @cli.command()
-@click.option('--name_folder', type=str, required=True, help='Name of the folder that contains the simulation data')
+@click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
 @click.option('--dni', type=float, required=True, help='Direct normal irradiance (DNI) value')
 @click.option('--dhi', type=float, required=True, help='Diffuse horizontal irradiance (DHI) value')
 @click.option('--sunalt', type=float, required=True, help='Sun altitude angle')
 @click.option('--sunaz', type=float, required=True, help='Sun azimuth angle')
-def gen_daylit_manual(name_folder, dni, dhi, sunalt, sunaz):
+def gen_daylit_manual(namefolder, dni, dhi, sunalt, sunaz):
     """Manually generates daylighting data using specified values"""
-    genDaylit2Manual_Local(name_folder, dni, dhi, sunalt, sunaz)
+    genDaylit2Manual_Local(namefolder, dni, dhi, sunalt, sunaz)
 
 @cli.command()
-@click.option('--name_folder', type=str, required=True, help='Name of the folder that contains the simulation data')
+@click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
 @click.option('--metdata', is_flag=True, help='Flag to use metdata from Radiance object')
 @click.option('--trackerdict', type=str, required=True, help='Path to the CSV file with tracker configurations')
-def gen_daylit_1axis(name_folder, metdata, trackerdict):
+def gen_daylit_1axis(namefolder, metdata, trackerdict):
     """Generates daylighting data for a 1-axis tracker configuration"""
-    # Load tracker dictionary from CSV
-    trackerdict_data = load_data(trackerdict)  # Asumimos que esta función carga el CSV
-    genDayLit1Axis_Local(name_folder, metdata, trackerdict_data)
+    genDayLit1Axis_Local(namefolder, metdata, trackerdict)
 
 ########################### version
 

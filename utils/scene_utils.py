@@ -96,3 +96,11 @@ def str_to_bool(value):
     else:
         # Opción para manejar valores que no son ni True ni False válidos
         raise ValueError(f"Cannot convert {value} to a boolean.")
+
+def validate_material(ctx, param, value):
+    # Intentamos convertir a float primero
+    try:
+        return float(value)
+    except ValueError:
+        # Si falla, lo dejamos como string
+        return value

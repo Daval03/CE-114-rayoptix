@@ -87,7 +87,7 @@ def genCumSky1axis_Local(name_folder, trackerdict):
         # Display an error if the folder is not found in the JSON data
         print(f"Folder '{name_folder}' not found.")
 
-def genDaylit_Local(name_folder, timeindex, metdata, debug=False):
+def genDaylit_Local(name_folder, timeindex, metdata, debug):
     """
     Generates daylighting data for a specific time index using bifacial_radiance.
 

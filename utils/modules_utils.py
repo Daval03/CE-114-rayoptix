@@ -1,7 +1,7 @@
 import bifacial_radiance as br
 import json
 
-def build_cell_module(moduleObj, cell_data):
+def build_cell_module(radianceObj, cell_data):
     """
     Configures the cell module within the bifacial radiance module using the provided cell data.
 
@@ -27,26 +27,16 @@ def build_cell_module(moduleObj, cell_data):
     if cell_data is None:
         return
     else:
-        numcellsx= cell_data.get('numcellsx')
-        numcellsy= cell_data.get('numcellsy')
-        xcell= cell_data.get('xcell')
-        ycell= cell_data.get('ycell')
-        xcellgap= cell_data.get('xcellgap')
-        ycellgap= cell_data.get('ycellgap')
-        centerJB= cell_data.get('centerJB')
-        recompile= cell_data.get('recompile')
-        
-        moduleObj.addCellModule(numcellsx=numcellsx,
-            numcellsy=numcellsy, 
-            xcell=xcell, 
-            ycell=ycell,
-            xcellgap=xcellgap, 
-            ycellgap=ycellgap, 
-            centerJB=centerJB,
-            recompile=recompile)
+         # Extract and filter the cell_params 
+        cell_params = {key: value for key, value in cell_data.items() if value is not None}
+
+        # Create the cell module with only the parameters that have values
+        radianceObj.module.addCellModule(**cell_params)
+
         print("CellModule has been added")
 
-def build_tube(moduleObj,tube_data):
+
+def build_tube(radianceObj,tube_data):
     """
     Configures the torque tube within the bifacial radiance module using the provided tube data.
 
@@ -69,23 +59,16 @@ def build_tube(moduleObj,tube_data):
     """
     if tube_data is None:
         return
-    else:
-        diameter= tube_data.get('diameter')
-        tubetype= tube_data.get('tubetype')
-        material= tube_data.get('tubematerial')
-        axisofrotation = tube_data.get('axisofrotation')
-        visible= tube_data.get('visible')
-        recompile= tube_data.get('recompile')
-        
-        moduleObj.addTorquetube(diameter=diameter,
-            tubetype=tubetype, 
-            material=material, 
-            axisofrotation=axisofrotation,
-            visible=visible,
-            recompile=recompile)
-        print("Torquetube has been added")
 
-def build_omega(moduleObj, omega_data):
+    # Extract and filter the tube_params 
+    tube_params = {key: value for key, value in tube_data.items() if value is not None}
+
+    # Create the torque tube with only the parameters that have values
+    radianceObj.module.addTorquetube(**tube_params)
+
+    print("Torquetube has been added")
+
+def build_omega(radianceObj, omega_data):
     """
     Configures the omega profile within the bifacial radiance module using the provided omega data.
 
@@ -110,27 +93,16 @@ def build_omega(moduleObj, omega_data):
     """
     if omega_data is None:
         return
-    else:
-        omega_material= omega_data.get('omega_material')
-        omega_thickness= omega_data.get('omega_thickness')
-        inverted= omega_data.get('inverted')
-        x_omega1= omega_data.get('x_omega1')
-        x_omega3= omega_data.get('x_omega3')
-        y_omega= omega_data.get('y_omega')
-        mod_overlap= omega_data.get('mod_overlap')
-        recompile= omega_data.get('recompile')
-        
-        moduleObj.addOmega(omega_material=omega_material,
-            omega_thickness=omega_thickness, 
-            inverted=inverted, 
-            x_omega1=x_omega1,
-            x_omega3=x_omega3,
-            y_omega=y_omega,
-            mod_overlap=mod_overlap,
-            recompile=recompile)
-        print("Omega has been added")
 
-def build_frame(moduleObj, frame_data):
+    # Extract and filter the omega_params 
+    omega_params = {key: value for key, value in omega_data.items() if value is not None}
+
+    # Create the omega profile with only the parameters that have values
+    radianceObj.module.addOmega(**omega_params)
+
+    print("Omega has been added")
+
+def build_frame(radianceObj, frame_data):
     """
     Configures the frame of the bifacial radiance module using the provided frame data.
 
@@ -153,18 +125,11 @@ def build_frame(moduleObj, frame_data):
     """
     if frame_data is None:
         return
-    else:
-        frame_material= frame_data.get('frame_material')
-        frame_thickness= frame_data.get('frame_thickness')
-        frame_z= frame_data.get('frame_z')
-        nSides_frame= frame_data.get('nSides_frame')
-        frame_width= frame_data.get('frame_width')
-        recompile= frame_data.get('recompile')
-        
-        moduleObj.addFrame(frame_material=frame_material,
-            frame_thickness=frame_thickness, 
-            frame_z=frame_z, 
-            nSides_frame=nSides_frame,
-            frame_width=frame_width,
-            recompile=recompile)
-        print("Frame has been added")
+
+    # Extract and filter the frame_params 
+    frame_params = {key: value for key, value in frame_data.items() if value is not None}
+
+    # Create the frame with only the parameters that have values
+    radianceObj.module.addFrame(**frame_params)
+
+    print("Frame has been added")

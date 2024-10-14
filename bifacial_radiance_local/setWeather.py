@@ -2,7 +2,7 @@ import os
 import shutil
 import bifacial_radiance as br
 import json
-
+import pandas as pd
 from utils.folders_utils import move_epws_folder
 from utils.metadata_utils import save_variable
 from utils.json_folder_utils import load_data
@@ -57,4 +57,41 @@ def setWeatherFiles_local(name_folder, pathCSV):
         # Display an error if the folder is not found in the JSON data
         print(f"Folder '{name_folder}' not found.")
 
+def getTimeStamp_local(name_folder, time):
+    """
+    Retrieves a timestamp from the simulation data based on the provided time.
+    Parameters
+    ----------
+    name_folder : str
+        The name of the folder that contains the simulation data.
+    time : str
+        The time to be converted into a timestamp and matched in the simulation's datetime index.
+    Returns
+    -------
+    pd.Timestamp or None
+        The corresponding timestamp if found, otherwise None.
+    """
+    # Path to the JSON file where simulation folders are stored
+    json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
+    
+    # Load the data from the JSON file
+    data = load_data(json_file)
+    if name_folder in data:
+        # Retrieve the folder path from the JSON data
+        folder_path = data[name_folder]
+        
+        # Combine folder_path with name_folder to get the full path
+        full_path = os.path.join(folder_path, name_folder)
+        
+        red_save = os.path.join(folder_path, "save.pickle")
+        red = br.load.loadRadianceObj(red_save)
+        try:
+            return red.metdata.datetime.index(pd.to_datetime(time)) 
+        except Exception as e:
+            print(f"Error: Could not find the timestamp for the provided time '{time}'. Details: {e}")
+    else:
+        # Display an error if the folder is not found in the JSON data
+        print(f"Folder '{name_folder}' not found.")
+
+#getTimeStamp_local(name_folder="Test_real", time="5")
 #setWeatherFiles_local("Test_1","C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/test_weather.csv")

@@ -20,9 +20,9 @@ def convert_value(value):
         return ', '.join(map(str, value))  # Join list elements as a string
     elif isinstance(value, str):  # Only convert if it's a string
         value = value.strip()
-        if value.lower() in ['true', '1']:  # Convert to boolean True
+        if value.lower() in ['true']:  # Convert to boolean True
             return True
-        elif value.lower() in ['false', '0']:  # Convert to boolean False
+        elif value.lower() in ['false']:  # Convert to boolean False
             return False
         if value == "":
             return None  # Convert empty strings to None
@@ -76,15 +76,22 @@ def load_params_from_csv(path):
 
     Parameters
     ----------
-    value : str or list
-        The value to be converted. Can be a string, list, or already typed value.
+    path : str or None
+        Path to the CSV file. If None, the function will return None.
 
     Returns
     -------
     int, float, None, bool, str
         Returns the converted value. Converts to int or float if possible, 
         booleans for 'true'/'false' values, None for empty strings, 
-        or returns the original string or list.
+        or returns the original string or list. Returns None if path is None or 
+        the path does not exist.
     """
-    params = get_csv(path)
-    return params[0] if params else None
+    if path is None:
+        return None
+    elif not os.path.exists(path):
+        print("Path doesn't exist.")
+        return None
+    else:
+        params = get_csv(path)
+        return params[0]
