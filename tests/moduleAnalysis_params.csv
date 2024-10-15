@@ -1,5 +1,5 @@
 scene,modWanted,rowWanted,sensorsy,sensorsx,frontsurfaceoffset,backsurfaceoffset,modscanfront,modscanback,relative,debug
-True,,,9,1,0.001,0.001,,,False,False
+True,,,20,,,,,,,
 
 scene,modWanted,rowWanted,sensorsy,sensorsx,frontsurfaceoffset,backsurfaceoffset,modscanfront,modscanback,relative,debug
 True,0,1,9,1,0.001,0.001,"{'xstart':0,'ystart':0,'zstart':0,'xinc':0.1,'yinc':0.1,'zinc':0,'Nx':9,'Ny':1,'Nz':1,'orient':'0 0 -1'}","{'xstart':0,'ystart':0,'zstart':0,'xinc':0.1,'yinc':0.1,'zinc':0,'Nx':9,'Ny':1,'Nz':1,'orient':'0 0 -1'}",False,False

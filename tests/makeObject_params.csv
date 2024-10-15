@@ -1,2 +1,5 @@
 name,text
-Post1,! genbox Metal_Aluminum_Anodized torquetube_row1 24.552000000000003 0.2 0.3 | xform -t -10.622000000000002 -0.1 -0.3 | xform -t 0 0 4.2
+Pile,! genrev Metal_Grey tube1row1 t*2.2 0.03 16 | xform -t 3.6267500000000004 0 -0.9 
+,! genrev Metal_Grey tube1row2 t*2.4 0.03 16 | xform -t 3.6267500000000004 1.5 0 
+,! genrev Metal_Grey tube2row1 t*2.2 0.03 16 | xform -t -1.8133749999999997 0 -0.8 
+,! genrev Metal_Grey tube2row2 t*2.4 0.03 16 | xform -t -1.8133749999999997 1.5 0

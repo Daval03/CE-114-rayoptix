@@ -1,6 +1,6 @@
 from utils.json_folder_utils import *
 from utils.scene_utils import *
-from utils.csv_folder_utils import load_params_from_csv
+from utils.csv_folder_utils import *
 import bifacial_radiance as br
 import json
 import pickle
@@ -380,25 +380,27 @@ def makeCustomObject_Local(name_folder, pathCSV):
         red_save = os.path.join(folder_path, "save.pickle")
         red = br.load.loadRadianceObj(red_save)
         
-        # Load CSV parameters
-        object_params = load_params_from_csv(pathCSV)
-        name = object_params.get('name')
-        text = object_params.get('text')
-
-        if not object_params:
+        if pathCSV is None:
             print("CSV files are missing.")
-            return
+            return 
+        elif not os.path.exists(pathCSV):
+            print("Path doesn't exist.")
+            return     
         else:
+            # Load CSV parameters
+            params = get_csv(pathCSV)
+        
+            text = '\n'.join(item['text'] for item in params if item['text'] is not None)
+            name = params[0]['name']
             original_path = os.getcwd()
             os.chdir(folder_path)
-
             red.makeCustomObject(name=name, text=text)
-            
             os.chdir(original_path)
             red.save(red_save)
     else:
         # Display an error if the folder is not found in the JSON data
         print(f"Folder '{name_folder}' not found.")
+
 
 def appendtoScene_Local(name_folder, radfile, pathObject, text):
     """
@@ -446,7 +448,7 @@ def appendtoScene_Local(name_folder, radfile, pathObject, text):
         print(f"Folder '{name_folder}' not found.")
 
 #appendtoScene_Local("Test_1", "True", "C:/Users/cambr/bifacial_radiance/TEMP/Test_1/objects/Post1.rad", "!xform -rz 0")
-#makeCustomObject_Local("Test_1", "C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/makeObject_params.csv")
+#makeCustomObject_Local("Test_real", "C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/makeObject_params.csv")
 #showScene_Local("Test_1")
 #setGround_Local("Test_1", material=0.2, material_file= None) 
 #set1axis_Local("Test_1", "C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/set1axis_params.csv")

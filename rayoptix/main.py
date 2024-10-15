@@ -37,7 +37,7 @@ def set_weather(namefolder, pathcsv):
 @click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
 @click.option('--pathfile', type=str, required=True, help='Path to the OCT file used in the simulation')
 @click.option('--name', type=str, required=True, help='Name assigned to the analysis object')
-@click.option('--hpc', type=bool, required=True, help='Flag to indicate if HPC is used')
+@click.option('--hpc', type=bool, required=False, help='Flag to indicate if HPC is used')
 def make_analysis_obj(namefolder, pathfile, name, hpc):
     """Sets the Analysis Object for a bifacial radiance simulation."""
     makeAnalysisObj_Local(namefolder, pathfile, name, hpc)
@@ -47,20 +47,35 @@ def make_analysis_obj(namefolder, pathfile, name, hpc):
 @click.option('--pathcsv', type=str, required=True, help='CSV path for the variables')
 def set_module_analysis(namefolder, pathcsv):
     """Configures and runs the module analysis for a bifacial radiance simulation."""
-    setmoduleAnalysis_Local(namefolder, pathcsv)
+    setModuleAnalysis_Local(namefolder, pathcsv)
 
 @cli.command()
 @click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
 @click.option('--octfile', type=str, required=True, help='Path to the OCT file used in the simulation')
 @click.option('--name', type=str, required=True, help='Name assigned to the analysis object')
-@click.option('--frontscan', type=str, required=True, help='Path to the front scan points data')
-@click.option('--backscan', type=str, required=True, help='Path to the back scan points data')
-@click.option('--plotflag', type=bool, required=True, help='Flag to indicate if the result should be plotted')
-@click.option('--accuracy', type=str, required=True, help='Accuracy level for the raytracing simulation (low or high)')
-@click.option('--rgb', type=bool, required=True, help='Flag to indicate if analysis should be done in RGB')
+@click.option('--frontscan', type=bool, required=True, help='Path to the front scan points data')
+@click.option('--backscan', type=bool, required=True, help='Path to the back scan points data')
+@click.option('--plotflag', type=bool, required=False, help='Flag to indicate if the result should be plotted')
+@click.option('--accuracy', type=str, required=False, help='Accuracy level for the raytracing simulation (low or high)')
+@click.option('--rgb', type=bool, required=False, help='Flag to indicate if analysis should be done in RGB')
 def make_analysis(namefolder, octfile, name, frontscan, backscan, plotflag, accuracy, rgb):
     """Performs the analysis for a bifacial radiance simulation."""
     makeAnalysis_Local(namefolder, octfile, name, frontscan, backscan, plotflag, accuracy, rgb)
+
+@cli.command()
+@click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
+@click.option('--pathcsv', type=str, required=True, help='Path to the CSV file containing front scan parameters')
+def set_front_scan(namefolder, pathcsv):
+    """Updates the front scan parameters for a bifacial radiance simulation."""
+    setFrontScan(namefolder, pathcsv)
+
+@cli.command()
+@click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
+@click.option('--pathcsv', type=str, required=True, help='Path to the CSV file containing back scan parameters')
+def set_back_scan(namefolder, pathcsv):
+    """Updates the back scan parameters for a bifacial radiance simulation."""
+    setBackScan(namefolder, pathcsv)
+
 
 ########################### setModules
 
@@ -165,9 +180,9 @@ def make_scene1axis(namefolder, pathcsv):
 @cli.command()
 @click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
 @click.option('--octname', type=str, required=False, help='Name for the .oct file')
-def make_oct(namefolder, octname):
+def make_oct(namefolder,octname):
     """Generate an .oct file for the simulation"""
-    makeOct_Local(namefolder, octname)
+    makeOct_Local(namefolder,octname)
 
 @cli.command()
 @click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
@@ -193,7 +208,7 @@ def make_customobject(namefolder, pathcsv):
 
 @cli.command()
 @click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
-@click.option('--radfile', type=bool, required=True, help='Whether to use a radiance file in the scene')
+@click.option('--radfile', type=str, required=True, help='Whether to use a radiance file in the scene')
 @click.option('--pathobject', type=str, required=True, help='Path to the custom object file')
 @click.option('--text', type=str, required=True, help='Additional text to include with the object in the scene')
 def append_to_scene(namefolder, radfile, pathobject, text):
