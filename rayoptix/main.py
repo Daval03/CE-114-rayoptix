@@ -76,6 +76,16 @@ def set_back_scan(namefolder, pathcsv):
     """Updates the back scan parameters for a bifacial radiance simulation."""
     setBackScan(namefolder, pathcsv)
 
+@cli.command()
+@click.option('--name-folder', type=str, required=True, help='Name of the folder that contains the simulation data')
+@click.option('--sensorsx', type=int, required=True, help='Number of sensors in the X direction')
+@click.option('--sensorsy', type=int, required=True, help='Number of sensors in the Y direction')
+@click.option('--p', type=float, required=True, help='Pitch value for the analysis')
+@click.option('--octfile', type=str, required=True, help='Octree file for the analysis')
+def multi_analysis(name_folder, sensorsx, sensorsy, p, octfile):
+    """Runs a multi-point analysis for bifacial radiance."""
+    makeMultiAnalysis_Local(name_folder, sensorsx, sensorsy, p, octfile)
+
 
 ########################### setModules
 

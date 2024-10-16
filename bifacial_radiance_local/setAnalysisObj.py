@@ -4,6 +4,7 @@ import pickle
 from utils.json_folder_utils import *
 from utils.metadata_utils import *
 from utils.csv_folder_utils import load_params_from_csv
+from utils.metrics_utils import *
 
 def makeAnalysisObj_Local(name_folder, pathfile, name, hpc):
     """
@@ -68,8 +69,6 @@ def setModuleAnalysis_Local(name_folder, pathCSV):
     if name_folder in data:
         # Retrieve the folder path from the JSON data
         folder_path = data[name_folder]
-        # Combine folder_path with name_folder to get the full path
-        full_path = os.path.join(folder_path, name_folder)
         
         # Load the radianceObj and analysisObj
         red_save = os.path.join(folder_path, "save.pickle")
@@ -290,6 +289,77 @@ def setBackScan(name_folder, pathcsv):
         # Display an error if the folder is not found in the JSON data
         print(f"Folder '{name_folder}' not found.")
 
+def makeMultiAnalysis_Local(name_folder, sensorsx, sensorsy, p, octfile):
+    json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
+    data = load_data(json_file)
+    
+    # Check if the folder exists in the data
+    if name_folder in data:
+        folder_path = data[name_folder]
+        
+        # Load the radianceObj and analysisObj
+        red_save = os.path.join(folder_path, "save.pickle")
+        red = br.load.loadRadianceObj(red_save)  
+        analysis = load_variable(folder_path, "analysis")
+
+        original_path = os.getcwd()
+        os.chdir(folder_path)
+        startgroundsample=-red.module.scenex
+        spacingbetweensamples = (red.module.scenex*(40/sensorsx))/(sensorsx-1)
+
+        #  Measure start time, memory, CPU, and GPU usage
+        start_time = time.monotonic()
+        start_mem, start_cpu = get_memory_cpu_usage()
+        start_gpu_load, start_gpu_mem = get_gpu_usage()
+        start_disk_read, start_disk_write = get_disk_usage()
+        start_mem_read, start_mem_write = get_memory_bandwidth()
+        start_cache_mem = get_cache_memory_usage()
+        start_swap_mem = get_swap_memory_usage()
+        start_cpu_freq, max_cpu_freq = get_cpu_frequency()
+
+        for i in range (0, sensorsx): # Will map 20 points
+            frontscan, backscan = analysis.moduleAnalysis(red.scene, sensorsy=sensorsy)
+            groundscan = frontscan
+            groundscan['zstart'] = 0.05  # setting it 5 cm from the ground.
+            groundscan['zinc'] = 0   # no tilt necessary.
+            groundscan['yinc'] = (p*(22/sensorsy))/(sensorsy-1)   # increasing spacing so it covers all distance between rows
+            groundscan['xstart'] = startgroundsample + i*spacingbetweensamples   # increasing spacing so it covers all distance between rows
+            analysis.analysis(octfile, red.name+"_groundscan_"+str(i), groundscan, backscan)  # compare the back vs front irradiance
+
+        # Measure end time, memory, CPU, and GPU usage
+        end_time = time.monotonic()
+        end_mem, end_cpu = get_memory_cpu_usage()
+        end_gpu_load, end_gpu_mem = get_gpu_usage()
+        end_disk_read, end_disk_write = get_disk_usage()
+        end_mem_read, end_mem_write = get_memory_bandwidth()
+        end_cache_mem = get_cache_memory_usage()
+        end_swap_mem = get_swap_memory_usage()
+        end_cpu_freq, _ = get_cpu_frequency()
+
+        os.chdir(original_path)
+
+        # Print timing, memory usage, CPU usage, and GPU usage information
+        print(f"Execution Time: {timedelta(seconds=end_time - start_time)}")
+        print(f"Memory Usage: {end_mem - start_mem:.2f} MB")
+        print(f"CPU Usage: {end_cpu:.2f}%")
+        if end_gpu_load is not None:
+            print(f"GPU Load: {end_gpu_load:.2f}%")
+            print(f"GPU Memory Usage: {end_gpu_mem:.2f} GB")
+        print(f"Disk Read: {end_disk_read - start_disk_read:.2f} MB")
+        print(f"Disk Write: {end_disk_write - start_disk_write:.2f} MB")
+        print(f"Memory Read: {end_mem_read - start_mem_read:.2f} MB")
+        print(f"Memory Write: {end_mem_write - start_mem_write:.2f} MB")
+        print(f"Cache Memory Usage: {end_cache_mem - start_cache_mem:.2f} MB")
+        print(f"Swap Memory Usage: {end_swap_mem - start_swap_mem:.2f} MB")
+        print(f"CPU Frequency: {end_cpu_freq:.2f} MHz (Max: {max_cpu_freq:.2f} MHz)")
+    
+    else:
+        # Display an error if the folder is not found in the JSON data
+        print(f"Folder '{name_folder}' not found.")
+
+#makeMultiAnalysis_Local("Test_real", 20, 20, 1, "C:/Users/cambr/bifacial_radiance/TEMP/Test_real/Test_real.oct")
+
+#def makeMultiAnalysis_Local(name_folder, sensorsx, sensorsy, p, octfile):
 #setFrontScan("Test_real", "C:/Users/cambr/Documents/Proyecto_CE-114/rayoptix/tests/back-frontscan_params.csv")
 
 ##Modified frontscan and backscan files frontscan, backscan = analysis.moduleAnalysis(scene, sensorsy=sensorsy)
