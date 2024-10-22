@@ -93,5 +93,6 @@ def load_params_from_csv(path):
         print("Path doesn't exist.")
         return None
     else:
+        path = os.path.normpath(path)
         params = get_csv(path)
         return params[0]

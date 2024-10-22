@@ -15,6 +15,7 @@ def genCumSky_Local(name_folder, gencumsky_path, savefile):
     savefile : str
         Filename to save the cumulative sky file.
     """
+    gencumsky_path = os.path.normpath(gencumsky_path)
     # Path to the JSON file where simulation folders are stored
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     

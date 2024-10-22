@@ -19,6 +19,7 @@ def setWeatherFiles_local(name_folder, pathCSV):
     pathCSV : str
         Path to the CSV file containing weather-related parameters such as latitude, longitude, start and end time, and other settings.
     """
+    pathCSV = os.path.normpath(pathCSV)
     # Path to the JSON file where simulation folders are stored
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     

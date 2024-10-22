@@ -25,6 +25,7 @@ def makeAnalysisObj_Local(name_folder, pathfile, name, hpc):
     -------
     None
     """
+    pathfile = os.path.normpath(pathfile)
     # Path to the JSON file where simulation folders are stored
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     
@@ -61,7 +62,7 @@ def setModuleAnalysis_Local(name_folder, pathCSV):
     """
     # Path to the JSON file where simulation folders are stored
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
-    
+    pathCSV = os.path.normpath(pathCSV)
     # Load the data from the JSON file
     data = load_data(json_file)
     
@@ -145,6 +146,10 @@ def makeAnalysis_Local(name_folder, octfile, name, frontscan, backscan, plotflag
     -------
     None
     """
+    octfile = os.path.normpath(octfile)
+    frontscan = os.path.normpath(frontscan)
+    backscan = os.path.normpath(backscan)
+
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     data = load_data(json_file)
     
@@ -214,6 +219,7 @@ def setFrontScan(name_folder, pathcsv):
     """
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     data = load_data(json_file)
+    pathcsv = os.path.normpath(pathcsv)
     
     # Check if the folder exists in the data
     if name_folder in data:
@@ -260,7 +266,7 @@ def setBackScan(name_folder, pathcsv):
     """
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     data = load_data(json_file)
-    
+    pathcsv = os.path.normpath(pathcsv)
     # Check if the folder exists in the data
     if name_folder in data:
         folder_path = data[name_folder]

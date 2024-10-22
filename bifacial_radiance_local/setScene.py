@@ -18,7 +18,7 @@ def setGround_Local(name_folder, material=None, material_file=None):
     material_file : str, optional
         Path to the material file. Default is None.
     """
-    
+    material_file = os.path.normpath(material_file)
     # Path to the JSON file where simulation folders are stored
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     
@@ -62,6 +62,7 @@ def set1axis_Local(name_folder, pathCSV):
     pathCSV : str
         Path to the CSV file containing parameters for the 1-axis tracker configuration.
     """
+    pathCSV = os.path.normpath(pathCSV)
     # Path to the JSON file where simulation folders are stored
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     
@@ -121,6 +122,7 @@ def makeScene_Local(name_folder, pathCSV):
     pathCSV : str
         Path to the CSV file containing parameters for scene creation.
     """
+    pathCSV = os.path.normpath(pathCSV)
     # Path to the JSON file where simulation folders are stored
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     
@@ -176,6 +178,7 @@ def makeScene1axis_Local(name_folder, pathCSV):
     pathCSV : str
         Path to the CSV file containing parameters for 1-axis tracker scene creation.
     """
+    pathCSV = os.path.normpath(pathCSV)
     # Path to the JSON file where simulation folders are stored
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     
@@ -237,6 +240,7 @@ def makeOct_Local(name_folder, octname):
     octname : str
         The name to be used for the .oct file.
     """
+
     # Path to the JSON file where simulation folders are stored
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     
@@ -367,6 +371,7 @@ def makeCustomObject_Local(name_folder, pathCSV):
     -------
     None
     """
+    pathCSV = os.path.normpath(pathCSV)
     # Path to the JSON file where simulation folders are stored
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     # Load the data from the JSON file
@@ -421,6 +426,7 @@ def appendtoScene_Local(name_folder, radfile, pathObject, text):
     -------
     None
     """
+    pathObject = os.path.normpath(pathObject)
     # Path to the JSON file where simulation folders are stored
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     # Load the data from the JSON file

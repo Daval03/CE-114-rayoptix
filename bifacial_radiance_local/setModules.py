@@ -24,6 +24,12 @@ def makeModule_Local(name_folder, pathCSV_makeModule, pathCSV_cellModule, pathCS
     pathCSV_frameParams : str
         Path to the CSV file containing frame-related parameters for the module.
     """
+    pathCSV_makeModule = os.path.normpath(pathCSV_makeModule)
+    pathCSV_cellModule = os.path.normpath(pathCSV_cellModule)
+    pathCSV_tubeParams = os.path.normpath(pathCSV_tubeParams)
+    pathCSV_omegaParams = os.path.normpath(pathCSV_omegaParams)
+    pathCSV_frameParams = os.path.normpath(pathCSV_frameParams)
+
     # Path to the JSON file where simulation folders are stored
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     
@@ -106,6 +112,7 @@ def addTorqueTube_Local(name_folder, pathCSV):
     -------
     None
     """
+    pathCSV = os.path.normpath(pathCSV)
     # Path to the JSON file where simulation folders are stored
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     
@@ -153,6 +160,7 @@ def addCellModule_Local(name_folder, pathCSV):
     -------
     None
     """ 
+    pathCSV = os.path.normpath(pathCSV)
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     data = load_data(json_file)
     folder_path = data.get(name_folder)
@@ -193,6 +201,7 @@ def addOmega_Local(name_folder, pathCSV):
     -------
     None
     """
+    pathCSV = os.path.normpath(pathCSV)
     # Path to the JSON file where simulation folders are stored
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     # Load the data from the JSON file
@@ -237,6 +246,7 @@ def addFrame_Local(name_folder, pathCSV):
     -------
     None
     """
+    pathCSV = os.path.normpath(pathCSV)
     # Path to the JSON file where simulation folders are stored
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     # Load the data from the JSON file
@@ -380,6 +390,7 @@ def returnMaterialFiles_Local(name_folder, material_path):
     -------
     None
     """
+    material_path = os.path.normpath(material_path)
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     data = load_data(json_file)
     folder_path = data.get(name_folder)
