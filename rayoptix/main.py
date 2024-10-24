@@ -77,15 +77,22 @@ def set_back_scan(namefolder, pathcsv):
     setBackScan(namefolder, pathcsv)
 
 @cli.command()
-@click.option('--name-folder', type=str, required=True, help='Name of the folder that contains the simulation data')
+@click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
 @click.option('--sensorsx', type=int, required=True, help='Number of sensors in the X direction')
 @click.option('--sensorsy', type=int, required=True, help='Number of sensors in the Y direction')
 @click.option('--p', type=float, required=True, help='Pitch value for the analysis')
 @click.option('--octfile', type=str, required=True, help='Octree file for the analysis')
-def multi_analysis(name_folder, sensorsx, sensorsy, p, octfile):
+def multi_analysis(namefolder, sensorsx, sensorsy, p, octfile):
     """Runs a multi-point analysis for bifacial radiance."""
-    makeMultiAnalysis_Local(name_folder, sensorsx, sensorsy, p, octfile)
+    makeMultiAnalysis_Local(namefolder, sensorsx, sensorsy, p, octfile)
 
+@click.command()
+@click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation results')
+@click.option('--filestarter', type=str, required=True, help='Prefix used to filter the result files to be processed')
+@click.option('--output_path', type=str, default=None, help='File path where the heatmap will be saved. If not specified, the heatmap will be displayed instead.')
+def save_results(namefolder, filestarter, output_path):
+    """Generates a heatmap from the results of a bifacial radiance simulation and saves it to a specified path or displays it."""
+    saveResults_Local(namefolder, filestarter, output_path)
 
 ########################### setModules
 
@@ -251,7 +258,6 @@ def gen_cum_sky(namefolder, gencumsky_path, savefile):
 @click.option('--trackerdict', type=str, required=True, help='Path to the CSV file with tracker configurations')
 def gen_cum_sky_1axis(namefolder, trackerdict):
     """Generates a cumulative sky for a 1-axis tracker configuration"""
-    # Load tracker dictionary from CSV
     genCumSky1axis_Local(namefolder, trackerdict)
 
 @cli.command()

@@ -1,6 +1,8 @@
 import bifacial_radiance as br
 import json
+import pandas as pd
 import pickle
+import matplotlib.pyplot as plt
 from utils.json_folder_utils import *
 from utils.metadata_utils import *
 from utils.csv_folder_utils import load_params_from_csv
@@ -296,6 +298,26 @@ def setBackScan(name_folder, pathcsv):
         print(f"Folder '{name_folder}' not found.")
 
 def makeMultiAnalysis_Local(name_folder, sensorsx, sensorsy, p, octfile):
+    """
+    Executes multiple analyses on a bifacial radiance simulation based on the specified sensor configuration.
+
+    Parameters
+    ----------
+    name_folder : str
+        The name of the folder that contains the simulation data.
+    sensorsx : int
+        The number of sensors along the x-axis for the ground scan.
+    sensorsy : int
+        The number of sensors along the y-axis for the ground scan.
+    p : float
+        The parameter used for spacing calculations between sensors in the y-direction.
+    octfile : str
+        The path to the oct file that will be used for analysis.
+
+    Returns
+    -------
+    None
+    """
     json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
     data = load_data(json_file)
     
@@ -363,6 +385,88 @@ def makeMultiAnalysis_Local(name_folder, sensorsx, sensorsy, p, octfile):
         # Display an error if the folder is not found in the JSON data
         print(f"Folder '{name_folder}' not found.")
 
+def saveResults_Local(name_folder, filestarter, output_path=None):
+    """
+    Generates a heatmap from the results of a bifacial radiance simulation and saves it to a specified path or displays it.
+
+    Parameters
+    ----------
+    name_folder : str
+        The name of the folder that contains the simulation results.
+    filestarter : str
+        The prefix used to filter the result files to be processed.
+    output_path : str, optional
+        The file path where the heatmap will be saved. If None, the heatmap will be displayed instead.
+
+    Returns
+    -------
+    None
+    """
+    json_file = os.path.expanduser('~/.rayoptix/simulation_folders.json')
+    data = load_data(json_file)
+    
+    # Check if the folder exists in the data
+    if name_folder in data:
+        folder_path = data[name_folder]
+        filelist = sorted(os.listdir(os.path.join(folder_path, 'results')))
+        prefixed = [filename for filename in filelist if filename.startswith(filestarter)]
+
+        arrayWm2Front = []
+        arrayWm2Back = []
+        arrayMatFront = []
+        arrayMatBack = []
+        filenamed = []
+        faillist = []
+
+        print('{} files in the directory'.format(filelist.__len__()))
+        print('{} groundscan files in the directory'.format(prefixed.__len__()))
+        i = 0  # counter to track # files loaded.
+
+        for i in range(len(prefixed)):
+            ind = prefixed[i].split('_')
+            file_path = os.path.join(folder_path, 'results', prefixed[i])
+            try:
+                resultsDF = br.load.read1Result(file_path)
+                arrayWm2Front.append(list(resultsDF['Wm2Front']))
+                arrayWm2Back.append(list(resultsDF['Wm2Back']))
+                arrayMatFront.append(list(resultsDF['mattype']))
+                arrayMatBack.append(list(resultsDF['rearMat']))
+                filenamed.append(prefixed[i])
+            except Exception as e:
+                print(f" FAILED {i} {prefixed[i]}: {e}")
+                faillist.append(prefixed[i])
+         # Create DataFrame from the collected results
+        resultsdf = pd.DataFrame(list(zip(arrayWm2Front, arrayWm2Back,
+                                           arrayMatFront, arrayMatBack)),
+                                 columns=['br_Wm2Front', 'br_Wm2Back',
+                                          'br_MatFront', 'br_MatBack'])
+        resultsdf['filename'] = filenamed
+        
+        # Save the DataFrame to a CSV file
+        output_file = os.path.join(folder_path, 'results', 'consolidated_results.csv')
+        resultsdf.to_csv(output_file, index=False)
+        print(f"Results saved to {output_file}")
+
+        df3 = pd.DataFrame(resultsdf['br_Wm2Front'].to_list())
+        reversed_df = df3.T.iloc[::-1]
+        sns.set(rc={'figure.figsize':(11.7,8.27)})
+        ax = sns.heatmap(reversed_df, cmap='viridis', linewidths=0, linecolor=None, cbar_kws={'label': 'Irradiation (Wh/m2)'})
+        ax.set_yticks([])
+        ax.set_xticks([])
+        ax.set_ylabel('')
+        ax.set_xlabel('')
+        if output_path:
+            plt.savefig(output_path, bbox_inches='tight')
+            print(f"Heatmap saved to {output_path}")
+        else:
+            plt.show()
+        plt.close()
+
+
+
+
+#save_or_show_heatmap("C:/Users/cambr/bifacial_radiance/TEMP/Test_real/results/consolidated_results.csv")
+#makePDF_Local("Test_real","irr_Test_real_groundscan")   
 #makeMultiAnalysis_Local("Test_real", 20, 20, 1, "C:/Users/cambr/bifacial_radiance/TEMP/Test_real/Test_real.oct")
 
 #def makeMultiAnalysis_Local(name_folder, sensorsx, sensorsy, p, octfile):
