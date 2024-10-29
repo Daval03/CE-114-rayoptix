@@ -7,6 +7,7 @@ from bifacial_radiance_local.setScene import *
 from bifacial_radiance_local.setSkyDome import *
 from bifacial_radiance_local.setWeather import *
 
+
 @click.group()
 def cli():
     """Rayoptix Command Line Interface."""
@@ -30,6 +31,17 @@ def setup_folders(path, namefolder):
 def set_weather(namefolder, pathcsv):
     """Set the EPW files"""
     setWeatherFiles_local(namefolder, pathcsv)
+
+@cli.command()
+@click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
+@click.option('--time', type=str, required=True, help='The time to look up in the simulation data')
+def get_timestamp(namefolder, time):
+    """Retrieve a timestamp from the simulation data"""
+    timestamp = getTimeStamp_local(namefolder, time)
+    if timestamp:
+        print(f"Timestamp found: {timestamp}")
+    else:
+        print(f"Timestamp for time '{time}' could not be found.")
 
 ########################### setAnalysisObj
 
@@ -231,17 +243,6 @@ def make_customobject(namefolder, pathcsv):
 def append_to_scene(namefolder, radfile, pathobject, text):
     """Append a custom object to the scene"""
     appendtoScene_Local(namefolder, radfile, pathobject, text)
-
-@cli.command()
-@click.option('--namefolder', type=str, required=True, help='Name of the folder that contains the simulation data')
-@click.option('--time', type=str, required=True, help='The time to look up in the simulation data')
-def get_timestamp(namefolder, time):
-    """Retrieve a timestamp from the simulation data"""
-    timestamp = getTimeStamp_local(namefolder, time)
-    if timestamp:
-        print(f"Timestamp found: {timestamp}")
-    else:
-        print(f"Timestamp for time '{time}' could not be found.")
 
 ########################### setSkyDome
 

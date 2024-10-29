@@ -9,7 +9,7 @@ Para instalar `Rayoptix`, simplemente ejecuta:
 ```bash
 pip install rayoptix
 
-Nota: Es necesario tener previamente instalados los programas Radiance y bifacial_radiance.
+Nota: Es necesario tener previamente instalados las bibliotecas de Radiance y bifacial_radiance.
 
 ## Documentación de Funciones
 
