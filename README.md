@@ -9,7 +9,6 @@ To install `Rayoptix`, simply run:
 ```bash
 pip install rayoptix
 ```
-
 Note: It is necessary to have the Radiance and bifacial_radiance libraries installed beforehand.
 
 ## Function Documentation
@@ -40,6 +39,16 @@ For more details on each of the functions in `Rayoptix`, please refer to the spe
 - [Generate Daylighting Data (`gen_daylit`)](docs/gen_daylit.md): Generates daylighting data for a specific time index.
 - [Manually Generate Daylighting Data (`gen_daylit_manual`)](docs/gen_daylit_manual.md): Manually generates daylighting data using specified values.
 - [Generate Daylighting Data for 1-Axis Tracker (`gen_daylit_1axis`)](docs/gen_daylit_1axis.md): Generates daylighting data for a 1-axis tracker configuration.
+- [Set Weather (`set_weather`)](docs/set_weather.md): Configures the weather files for the simulation folder using parameters from a specified CSV file.
+- [Set Module Analysis (`set_module_analysis`)](docs/set_module_analysis.md): Configures and runs the module analysis for a bifacial radiance simulation using parameters from a specified CSV file.
+- [Set Back Scan (`set_back_scan`)](docs/set_back_scan.md): Updates the back scan parameters for a bifacial radiance simulation using values from a specified CSV file.
+- [Set Front Scan (`set_front_scan`)](docs/set_front_scan.md): Updates the front scan parameters for a bifacial radiance simulation using values from a specified CSV file.
+- [Save Results (`save_results`)](docs/save_results.md): Generates a heatmap from the results of a bifacial radiance simulation and saves it to a specified path or displays it.
+- [Multi-Point Analysis (`multi_analysis`)](docs/multi_analysis.md): Runs a multi-point analysis for bifacial radiance, executing multiple analyses based on the specified sensor configuration.
+- [Perform Analysis (`make_analysis`)](docs/make_analysis.md): Performs the analysis for a bifacial radiance simulation using previously defined scan points.
+- [Setup Analysis Object (`make_analysis_obj`)](docs/make_analysis_obj.md): Sets up the analysis object for a bifacial radiance simulation.
+- [Get Timestamp (`get_timestamp`)](docs/get_timestamp.md): Retrieves a timestamp from the simulation data based on the provided time.
+
 
 
 Each link leads to detailed documentation on how to use the corresponding commands, their options, and usage examples.
