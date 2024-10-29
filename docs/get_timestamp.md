@@ -1,18 +1,17 @@
+# Command: `get_timestamp`
 
-# Comando: `get_timestamp`
+## Description
 
-## Descripción
+The `get_timestamp` command retrieves a timestamp from the simulation data based on the provided time. If a matching timestamp is found, it is printed to the output; otherwise, a message is displayed indicating that it could not be found.
 
-El comando `get_timestamp` recupera una marca de tiempo (timestamp) de los datos de simulación según la hora proporcionada. Si se encuentra una marca de tiempo que coincida, se imprime en la salida; de lo contrario, se informa que no se pudo encontrar.
-
-## Uso
+## Usage
 
 ```bash
-get_timestamp --namefolder <nombre_carpeta> --time <hora>
+get_timestamp --namefolder <folder_name> --time <time>
 ```
 
-## Opciones
+## Options
 
-    --namefolder (str, obligatorio): Nombre de la carpeta que contiene los datos de simulación.
-    --time (str, obligatorio): La hora específica a buscar en los datos de simulación.
+- `--namefolder` (str, required): Name of the folder containing simulation data.
+- `--time` (str, required): The specific time to search for in the simulation data.
 

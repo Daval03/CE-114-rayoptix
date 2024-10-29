@@ -1,8 +1,15 @@
-# Función: setup_folders
 
-La función `setup_folders` configura las carpetas iniciales para almacenar la configuración de una simulación usando `Rayoptix CLI`.
+# Command: `setup_folders`
 
-## Uso
+The `setup_folders` function sets up the initial folders to store the configuration for a simulation using `Rayoptix CLI`.
+
+## Usage
 
 ```bash
-rayoptix setup_folders --path <ruta> --namefolder <nombre_de_carpeta>
+rayoptix setup_folders --path <path> --namefolder <folder_name>
+```
+
+## Options
+
+- `--path` (str, required): Path where the folders will be created.
+- `--namefolder` (str, required): Name of the folder to store the simulation configuration.

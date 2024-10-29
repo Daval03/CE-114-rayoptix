@@ -1,20 +1,21 @@
 # Rayoptix
 
-`Rayoptix` es una biblioteca de Python diseñada para ejecutarse desde la terminal. Facilita la creación y evaluación de simulaciones de sistemas fotovoltaicos bifaciales complejos mediante técnicas de ray tracing. Con esta herramienta, los usuarios pueden definir módulos, configurar condiciones experimentales y realizar simulaciones para analizar el comportamiento energético de estos sistemas.
+`Rayoptix` is a Python library designed to run from the terminal. It facilitates the creation and evaluation of simulations for complex bifacial photovoltaic systems using ray tracing techniques. With this tool, users can define modules, set up experimental conditions, and run simulations to analyze the energy performance of these systems.
 
-## Instalación
+## Installation
 
-Para instalar `Rayoptix`, simplemente ejecuta:
+To install `Rayoptix`, simply run:
 
 ```bash
 pip install rayoptix
+```
 
-Nota: Es necesario tener previamente instalados las bibliotecas de Radiance y bifacial_radiance.
+Note: It is necessary to have the Radiance and bifacial_radiance libraries installed beforehand.
 
-## Documentación de Funciones
+## Function Documentation
 
-Para más detalles sobre cada una de las funciones de `Rayoptix`, consulta la documentación específica:
+For more details on each of the functions in `Rayoptix`, please refer to the specific documentation:
 
-- [Configuración de Carpetas (`setup_folders`)](docs/setup_folders.md): Permite crear y configurar carpetas para almacenar configuraciones de simulación.
+- [Folder Setup (`setup_folders`)](docs/setup_folders.md): Allows creating and configuring folders to store simulation configurations.
 
-Cada enlace lleva a la documentación detallada sobre cómo utilizar los comandos correspondientes, sus opciones y ejemplos de uso.
+Each link leads to detailed documentation on how to use the corresponding commands, their options, and usage examples.

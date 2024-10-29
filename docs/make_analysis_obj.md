@@ -1,18 +1,18 @@
-# Comando: `make_analysis_obj`
+# Command: `make_analysis_obj`
 
-## Descripción
+## Description
 
-El comando `make_analysis_obj` configura el objeto de análisis para una simulación de radiancia bifacial. Requiere los parámetros de la carpeta de datos de simulación, la ruta al archivo OCT, y el nombre del objeto de análisis. Opcionalmente, permite especificar si se utiliza computación de alto rendimiento (HPC).
+The `make_analysis_obj` command sets up the analysis object for a bifacial radiance simulation. It requires parameters for the simulation data folder, the path to the OCT file, and the name of the analysis object. Optionally, it allows specifying if high-performance computing (HPC) is used.
 
-## Uso
+## Usage
 
 ```bash
 make_analysis_obj --namefolder <nombre_carpeta> --pathfile <ruta_archivo> --name <nombre_objeto> [--hpc <true/false>]
 ```
 
-## Opciones
+## Options
 
-- `--namefolder` (str, obligatorio): Nombre de la carpeta que contiene los datos de simulación.
-- `--pathfile` (str, obligatorio): Ruta al archivo OCT utilizado en la simulación.
-- `--name` (str, obligatorio): Nombre asignado al objeto de análisis.
-- `--hpc` (bool, opcional): Indicador de uso de computación de alto rendimiento (HPC), por defecto `False`.
+- `--namefolder` (str, required): Name of the folder containing simulation data.
+- `--pathfile` (str, required): Path to the OCT file used in the simulation.
+- `--name`  (str, required): Name assigned to the analysis object.
+- `--hpc` (bool, optional): Indicator for using high-performance computing (HPC), default is  `False`.

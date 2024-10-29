@@ -1,18 +1,19 @@
 
-# Comando: `set_weather`
+# Command: `set_weather`
 
-## Descripción
+## Description
 
-El comando `set_weather` configura los archivos meteorológicos para la carpeta de simulación usando los parámetros de latitud, longitud, hora de inicio y fin, y otros ajustes especificados en un archivo CSV. Si se proporcionan correctamente, los archivos meteorológicos se configuran y se almacenan en la carpeta especificada.
+The `set_weather` command configures the weather files for the simulation folder using parameters for latitude, longitude, start and end times, and other settings specified in a CSV file. If provided correctly, the weather files are set up and stored in the specified folder.
 
-## Uso
+## Usage
 
 ```bash
-set_weather --namefolder <nombre_carpeta> --pathcsv <ruta_csv>
+set_weather --namefolder <folder_name> --pathcsv <csv_path>
 ```
-## Opciones
 
-    --namefolder (str, obligatorio): Nombre de la carpeta que contiene los datos de simulación.
-    --pathcsv (str, obligatorio): Ruta al archivo CSV con los parámetros.
+## Options
+
+- `--namefolder` (str, required): Name of the folder containing simulation data.
+- `--pathcsv` (str, required): Path to the CSV file with parameters.
 
 
