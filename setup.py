@@ -28,7 +28,7 @@ class PostInstallCommand(install):
 
 setup(
     name='rayoptix',  # El nombre de tu paquete en PyPI
-    version='1.0.1',  # Asegúrate de actualizar la versión con cada release
+    version='1.0.2',  # Asegúrate de actualizar la versión con cada release
     packages=find_packages(),
     install_requires=[
         "bifacial_radiance",

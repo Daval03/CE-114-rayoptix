@@ -11,7 +11,9 @@ pip install rayoptix
 ```
 Note: It is necessary to have the Radiance, bifacial_radiance, pandas, matplotlib, sutil, GPUtil, seaborn, and psutil libraries installed beforehand.
 
+## References
 
+Ayala Pelaez, S. and Deline, C. (2020). *bifacial_radiance: a Python package for modeling bifacial solar photovoltaic systems*. Journal of Open Source Software, 5(50), 1865. [https://doi.org/10.21105/joss.01865](https://doi.org/10.21105/joss.01865)
 
 ## Function Documentation
 
