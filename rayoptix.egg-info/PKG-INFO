@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: rayoptix
-Version: 1.0.1
+Version: 1.0.2
 Summary: Rayoptix is a terminal-based Python library for creating and evaluating simulations of bifacial photovoltaic systems using ray tracing. It allows users to define modules, configure experimental conditions, and analyze energy performance in complex solar setups.
 Home-page: https://github.com/Daval03/CE-114-rayoptix
 Author: Aldo Cambronero Ureña
@@ -33,7 +33,9 @@ pip install rayoptix
 ```
 Note: It is necessary to have the Radiance, bifacial_radiance, pandas, matplotlib, sutil, GPUtil, seaborn, and psutil libraries installed beforehand.
 
+## References
 
+Ayala Pelaez, S. and Deline, C. (2020). *bifacial_radiance: a Python package for modeling bifacial solar photovoltaic systems*. Journal of Open Source Software, 5(50), 1865. [https://doi.org/10.21105/joss.01865](https://doi.org/10.21105/joss.01865)
 
 ## Function Documentation
 

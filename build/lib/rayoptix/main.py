@@ -293,7 +293,7 @@ def gen_daylit_1axis(namefolder, metdata, trackerdict):
 @cli.command()
 def version():
     """Show up the version."""
-    click.echo('Rayoptix version 0.1.0')
+    click.echo('Rayoptix version 1.0.2')
 
 if __name__ == '__main__':
     cli()
